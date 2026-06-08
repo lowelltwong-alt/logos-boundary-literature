@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/logos-boundary-literature/schemas/trust_profile.schema.json",
+  "title": "TrustProfile",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "trust_level",
+    "description",
+    "allowed_uses",
+    "forbidden_uses",
+    "default_retrieval",
+    "canonical_influence_allowed",
+    "required_review"
+  ],
+  "properties": {
+    "trust_level": {
+      "type": "string",
+      "enum": [
+        "canonical_scripture_reference_only",
+        "deuterocanonical_tradition_scoped",
+        "high_trust_noncanonical_background",
+        "historical_context_source",
+        "patristic_reception",
+        "heterodox_or_gnostic",
+        "disputed_attribution",
+        "known_forgery_or_fake",
+        "quarantine_unreviewed"
+      ]
+    },
+    "description": { "type": "string" },
+    "allowed_uses": { "type": "array", "items": { "type": "string" } },
+    "forbidden_uses": { "type": "array", "items": { "type": "string" } },
+    "default_retrieval": { "type": "string" },
+    "canonical_influence_allowed": { "type": "boolean", "const": false },
+    "required_review": { "type": "array", "items": { "type": "string" } }
+  }
+}

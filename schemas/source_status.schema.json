@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/logos-boundary-literature/schemas/source_status.schema.json",
+  "title": "SourceStatus",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "source_id",
+    "acquisition_status",
+    "ingestion_allowed",
+    "citation_allowed",
+    "source_review_required"
+  ],
+  "properties": {
+    "source_id": { "type": "string" },
+    "acquisition_status": {
+      "type": "string",
+      "enum": [
+        "public_domain",
+        "open_license",
+        "citation_only",
+        "restricted_do_not_ingest",
+        "unknown_license",
+        "requires_human_source_review"
+      ]
+    },
+    "license_notes": { "type": ["string", "null"] },
+    "ingestion_allowed": { "type": "boolean", "default": false },
+    "citation_allowed": { "type": "boolean", "default": false },
+    "source_review_required": { "type": "boolean", "default": true }
+  }
+}

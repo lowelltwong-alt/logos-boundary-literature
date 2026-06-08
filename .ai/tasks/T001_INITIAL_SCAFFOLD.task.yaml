@@ -1,0 +1,31 @@
+id: T001_INITIAL_SCAFFOLD
+title: "Scaffold boundary literature governance repo"
+mode: scaffold
+status: complete
+owner: codex
+scope:
+  allowed_paths:
+    - AI_FRONT_DOOR.md
+    - README.md
+    - LICENSE_POLICY.md
+    - governance/
+    - schemas/
+    - data/
+    - eval/
+    - tests/
+    - .ai/
+  forbidden_actions:
+    - import_source_texts
+    - download_sources
+    - create_canonical_scripture_records
+    - create_runtime_ingestion_pipeline
+    - treat_boundary_literature_as_word_of_god
+acceptance_criteria:
+  - "Governance docs exist."
+  - "Schemas exist and parse as JSON."
+  - "Data folders are empty except .gitkeep."
+  - "No source texts are imported."
+  - "Initial handoff exists."
+validation:
+  - "file tree check"
+  - "JSON schema parse with Python"

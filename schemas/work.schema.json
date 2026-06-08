@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/logos-boundary-literature/schemas/work.schema.json",
+  "title": "BoundaryWork",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "work_id",
+    "title",
+    "source_family",
+    "attribution_status",
+    "trust_level",
+    "canon_status_by_tradition",
+    "source_status",
+    "allowed_uses",
+    "forbidden_uses",
+    "contamination_risk",
+    "review_status",
+    "provenance"
+  ],
+  "properties": {
+    "work_id": { "type": "string" },
+    "title": { "type": "string" },
+    "aliases": { "type": "array", "items": { "type": "string" } },
+    "source_family": { "type": "string" },
+    "claimed_author": { "type": ["string", "null"] },
+    "scholarly_attribution": { "type": ["string", "null"] },
+    "attribution_status": {
+      "type": "string",
+      "enum": [
+        "claimed_author_known",
+        "anonymous",
+        "traditional_attribution",
+        "pseudepigraphal",
+        "disputed_attribution",
+        "false_attribution",
+        "known_forgery",
+        "modern_hoax",
+        "unknown_unreviewed"
+      ]
+    },
+    "trust_level": {
+      "type": "string",
+      "enum": [
+        "canonical_scripture_reference_only",
+        "deuterocanonical_tradition_scoped",
+        "high_trust_noncanonical_background",
+        "historical_context_source",
+        "patristic_reception",
+        "heterodox_or_gnostic",
+        "disputed_attribution",
+        "known_forgery_or_fake",
+        "quarantine_unreviewed"
+      ]
+    },
+    "canon_status_by_tradition": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "authority_use_by_tradition": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "date_range": {
+      "type": "object",
+      "properties": {
+        "start": { "type": ["integer", "null"] },
+        "end": { "type": ["integer", "null"] },
+        "precision": { "type": ["string", "null"] }
+      },
+      "additionalProperties": false
+    },
+    "language": { "type": ["string", "array"], "items": { "type": "string" } },
+    "source_status": { "type": "string" },
+    "allowed_uses": { "type": "array", "items": { "type": "string" } },
+    "forbidden_uses": { "type": "array", "items": { "type": "string" } },
+    "contamination_risk": { "type": "string" },
+    "review_status": {
+      "type": "string",
+      "enum": ["draft", "requires_human_review", "reviewed", "quarantine_unreviewed"]
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "notes": { "type": ["string", "null"] }
+  }
+}
