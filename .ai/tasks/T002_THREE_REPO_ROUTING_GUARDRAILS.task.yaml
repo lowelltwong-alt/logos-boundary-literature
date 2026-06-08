@@ -1,0 +1,32 @@
+id: T002
+title: "Three-repo routing guardrails"
+mode: governance_docs
+status: complete
+owner: codex
+scope:
+  allowed_paths:
+    - AI_FRONT_DOOR.md
+    - README.md
+    - governance/
+    - .ai/control/
+    - .ai/handoffs/T002_THREE_REPO_ROUTING_GUARDRAILS.md
+    - .ai/tasks/T002_THREE_REPO_ROUTING_GUARDRAILS.task.yaml
+    - tests/test_three_repo_routing_guardrails.py
+  forbidden_actions:
+    - import_source_texts
+    - download_sources
+    - mutate_scripture_graph_data
+    - create_canonical_scripture_records
+    - create_boundary_corpus_records
+    - create_commentary_corpus_records
+    - create_runtime_ingestion_pipeline
+    - treat_boundary_literature_as_word_of_god
+acceptance_criteria:
+  - "AI front door records three-repo authority hierarchy."
+  - "Boundary-local routing policy exists."
+  - "Governance docs state that boundary material cannot override or equal canonical Scripture authority."
+  - "No source texts are imported."
+  - "Data folders remain empty except .gitkeep."
+validation:
+  - "python -m pytest -q"
+  - "JSON schema parse with Python"

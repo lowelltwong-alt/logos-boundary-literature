@@ -2,6 +2,9 @@
 
 ## Ownership
 
+`logos-governance-architecture` owns cross-repo policy, authority contracts, update rules, and
+validation patterns.
+
 `logos-scripture-graph` owns:
 
 - canonical Scripture records;
@@ -19,6 +22,19 @@
 - scoped boundary claims;
 - reception/background/refutation relationships.
 
+Authority hierarchy:
+
+```text
+logos-governance-architecture
+  -> cross-repo policy and authority contracts
+  -> logos-scripture-graph
+     -> canonical 66-book Scripture truth
+     -> logos-boundary-literature
+        -> scoped supporting/background/reception/refutation material
+```
+
+Boundary material is under, or at minimum never above, canonical Scripture authority.
+
 ## Reference Direction
 
 This repo may point to Scripture refs. It must not copy Scripture text.
@@ -30,6 +46,10 @@ repo's claims as canonical truth.
 
 Claims from this repo cannot become canonical Scripture claims without explicit tradition/profile
 review.
+
+Claims from this repo must not override, contaminate, or become equal authority to canonical
+Scripture. If a task appears to require boundary material to modify canonical Scripture outputs,
+stop and report.
 
 ## Contract Fields For Future Relationships
 
