@@ -5,6 +5,11 @@ Canonical Scripture remains in `logos-scripture-graph`.
 This repository models boundary, noncanonical, disputed, heterodox, forged, reception-history, and
 supporting literature. Presence here does not imply canonical authority.
 
+`logos-boundary-literature` is hierarchically under, or at minimum never above, canonical Scripture
+authority. `logos-governance-architecture` may define cross-repo policy and authority contracts, but
+boundary literature must not override, contaminate, or become equal authority to canonical
+Scripture.
+
 ## Required Distinctions
 
 - Tradition-scoped canon status must be modeled explicitly.
@@ -14,6 +19,7 @@ supporting literature. Presence here does not imply canonical authority.
 - Commentary and reception claims are not canonical claims.
 - Heterodox/gnostic texts must be represented accurately and scoped as heterodox/gnostic.
 - Known forgeries are preserved only for identification, quarantine, comparison, and refutation.
+- Boundary claims must remain scoped by trust level, tradition, profile, and provenance.
 
 ## 1 Enoch Statement
 
@@ -33,6 +39,8 @@ canonical_claim: false
 canonical_influence_allowed: false
 tradition_scope: required when canon status is discussed
 profile_scope: required when an interpretive profile is used
+can_override_scripture: false
+can_equal_scripture_authority: false
 ```
 
 ## Prohibited Claims

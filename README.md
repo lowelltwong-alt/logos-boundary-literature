@@ -15,6 +15,23 @@ without contaminating Scripture records.
 This scaffold defines governance, trust hierarchy, schemas, and cross-repo contracts. It does not
 include source texts.
 
+## Three-Repo Routing
+
+`logos-governance-architecture` owns cross-repo policy, authority contracts, update rules, and
+validation patterns.
+
+`logos-scripture-graph` owns canonical 66-book Scripture truth, canonical passage records,
+canonical chunking, canonical Scripture gold/evaluator surfaces, and canonical Scripture graph
+outputs.
+
+`logos-boundary-literature` owns boundary literature metadata, source status, trust profiles,
+tradition-scoped claims, commentary/reception claims, and comparison/refutation/background
+relationships. It is hierarchically under, or at minimum never above, canonical Scripture authority.
+
+Boundary material must not override, contaminate, or become equal authority to canonical Scripture.
+If a task appears to require boundary material to modify canonical Scripture outputs, stop and
+report.
+
 ## Trust Hierarchy
 
 1. `canonical_scripture_reference_only`

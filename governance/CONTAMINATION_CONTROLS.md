@@ -3,6 +3,10 @@
 Boundary texts may reference Scripture. Scripture records must not absorb boundary claims as
 canonical truth.
 
+`logos-boundary-literature` may interoperate with `logos-scripture-graph`, but it is hierarchically
+under, or at minimum never above, canonical Scripture authority. Boundary claims must not override,
+contaminate, or become equal authority to canonical Scripture.
+
 ## Core Controls
 
 - No generic `related_to` links.
@@ -13,6 +17,10 @@ canonical truth.
 - No canon claim without tradition scope.
 - No commentary or reception claim as canonical truth.
 - No boundary source text copied into `logos-scripture-graph`.
+- No boundary material used to mutate canonical Scripture records, chunks, evaluator inputs, or
+  default Scripture retrieval.
+- Stop and report if a task appears to require boundary material to modify canonical Scripture
+  outputs.
 
 ## Typed Relationships
 

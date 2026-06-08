@@ -33,6 +33,39 @@ This repo may point to Scripture references. It must not copy Scripture text or 
 records. Claims from this repo may be used only as background, reception, comparison, refutation, or
 tradition-scoped evidence unless a separate human review explicitly authorizes another use.
 
+## Three-Repo Authority Hierarchy
+
+`logos-governance-architecture` is the higher governance/control-plane repo for cross-repo policy,
+authority contracts, update rules, and validation patterns.
+
+`logos-scripture-graph` owns canonical Scripture truth for the 66-book Bible graph.
+
+`logos-boundary-literature` supports canonical Scripture work with noncanonical,
+deuterocanonical/apocrypha, boundary, heterodox, disputed, forged, commentary/reception, historical
+background, and supporting literature.
+
+This repo is hierarchically under, or at minimum never above, canonical Scripture authority. It may
+provide background, comparison, reception history, refutation targets, commentary/reception claims,
+and tradition-scoped claims. It must not override, contaminate, or become equal authority to
+canonical Scripture.
+
+If a task appears to require boundary material to modify canonical Scripture outputs, stop and
+report.
+
+Machine-readable local routing policy:
+`.ai/control/boundary_material_routing.yaml`.
+
+| User/task intent | Correct repo |
+|---|---|
+| 66-book Scripture passages/chunks | `logos-scripture-graph` |
+| Apocrypha/deuterocanon/boundary literature | `logos-boundary-literature` |
+| Gnostic/fake/forged texts | `logos-boundary-literature` |
+| Commentary/reception claims | `logos-boundary-literature` |
+| Cross-repo policy/authority/update rules | `logos-governance-architecture` |
+| Canonical corpus correction | `logos-scripture-graph` |
+| Boundary text source intake | `logos-boundary-literature` |
+| Repository-link contract changes | `logos-governance-architecture` or coordinated PR |
+
 ## Hard Prohibitions
 
 - Do not import full text corpora.
@@ -46,6 +79,7 @@ tradition-scoped evidence unless a separate human review explicitly authorizes a
 - Do not create runtime ingestion pipelines in this scaffold.
 - Do not overwrite tradition-specific canon status.
 - Do not create unscoped theological claims.
+- Do not let boundary claims override, contaminate, or equal canonical Scripture authority.
 
 ## Next Tasks
 
