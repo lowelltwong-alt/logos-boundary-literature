@@ -1,6 +1,6 @@
 # Project Status
 
-Status: T003 contributor review policy complete.
+Status: T004 boundary governance stop rules complete.
 
 This repository is `logos-boundary-literature`, a governed boundary/noncanonical/reception
 literature scaffold. It is not canonical Scripture and contains no source text corpus.
@@ -26,9 +26,19 @@ literature scaffold. It is not canonical Scripture and contains no source text c
   - the policy applies only to `logos-boundary-literature`;
   - it does not authorize source-text ingestion, real corpus records, canonical Scripture records,
     or boundary claims as canonical truth.
+- Boundary governance stop rules added:
+  - `BOUNDARY-GOV-001 - Governance Is Constraint, Not Obstacle`;
+  - `BOUNDARY-GOV-002 - Owner-Reserved Authorization for Boundary-Originated Higher-Layer Changes`;
+  - boundary-originated requests must stop if they conflict with governance-layer policy, canonical
+    Scripture authority, repository-link contracts, routing policy, trust hierarchy, or canonical
+    scope;
+  - only Lowell Wong, as project owner, may authorize boundary-originated changes to those
+    higher-authority surfaces;
+  - contributor consensus, contributor volume, automated recommendation, agent routing, and
+    boundary-layer operational need are not sufficient authority.
 
 ## Next Recommended Task
 
 Review source intake policy and add validation before any dummy records. Real source text import is
-not allowed yet. Governance repo should receive a coordinated cross-repo authority contract update
-after its local dirty work is resolved.
+not allowed yet. Any boundary-originated request that targets higher-authority governance or
+canonical Scripture layers must stop and be reviewed in the higher-authority repository.

@@ -49,3 +49,5 @@ does_not_authorize:
   - boundary_claims_as_canonical_truth
   - boundary_repo_override_of_scripture
   - boundary_repo_equal_authority_to_scripture
+  - boundary_originated_higher_authority_changes_without_owner_authorization
+  - automated_governance_change_requests_from_boundary_layer
