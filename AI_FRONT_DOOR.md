@@ -81,6 +81,33 @@ Machine-readable local routing policy:
 - Do not create unscoped theological claims.
 - Do not let boundary claims override, contaminate, or equal canonical Scripture authority.
 
+## Contributor Review For Sensitive Changes
+
+External contributor changes to sensitive governance, source, claim, corpus, trust, attribution, or
+cross-repo authority surfaces require maintainer review before merge.
+
+This applies to `logos-boundary-literature` only. It does not apply to `logos-scripture-graph` and
+does not change its rules. It does not authorize importing source texts, creating real corpus records,
+creating canonical Scripture records, or treating boundary claims as canonical truth.
+
+Review is required for external contributor changes affecting:
+
+- trust hierarchy;
+- canon status by tradition;
+- source intake;
+- attribution and forgery labels;
+- source text ingestion;
+- boundary claim records;
+- commentary/reception claims;
+- corpus records;
+- cross-repo authority rules.
+
+Routine maintainer-controlled changes to docs, scaffolding, planning, schema drafts, tests, and
+templates remain governed by normal repository controls and validation.
+
+Machine-readable contributor review policy:
+`.ai/control/contributor_review_policy.yaml`.
+
 ## Next Tasks
 
 1. Review governance docs.

@@ -57,3 +57,13 @@ Scripture passage S means boundary claim C because boundary source B says it.
 
 Boundary material may be retrieved for background, reception, comparison, and refutation only after
 review. It must not appear in canonical Scripture answers by default.
+
+## Contributor Review Boundary
+
+External contributor changes to cross-repo authority rules, boundary claim records,
+commentary/reception claims, corpus records, trust hierarchy, canon status by tradition, source
+intake, source text ingestion, or attribution/forgery labels require maintainer review before merge.
+
+This review policy applies only to `logos-boundary-literature`. It does not apply to
+`logos-scripture-graph` and does not change its rules, does not authorize source-text ingestion, and does not permit boundary
+repo material to override or equal Scripture.

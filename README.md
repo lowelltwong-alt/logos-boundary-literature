@@ -79,6 +79,18 @@ tests/           Placeholder for future validation tests.
 - Do not create a claim without provenance.
 - Do not create a canon claim without tradition scope.
 
+## Contributor Review
+
+External contributor changes to sensitive governance, source, claim, corpus, trust, attribution, or
+cross-repo authority surfaces require maintainer review before merge.
+
+This public policy applies only to `logos-boundary-literature`. It does not apply to
+`logos-scripture-graph` and does not change its rules, does not authorize source-text ingestion, does not authorize real corpus
+records, and does not allow boundary material to override or equal canonical Scripture authority.
+
+See [`governance/CONTRIBUTOR_REVIEW_POLICY.md`](governance/CONTRIBUTOR_REVIEW_POLICY.md) and
+[`.ai/control/contributor_review_policy.yaml`](.ai/control/contributor_review_policy.yaml).
+
 ## No Text Import Yet
 
 The `data/` folders are intentionally empty except `.gitkeep`. No full source text corpus,
