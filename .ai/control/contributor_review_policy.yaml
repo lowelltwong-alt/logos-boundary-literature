@@ -1,0 +1,51 @@
+policy_id: BOUNDARY-CONTRIBUTOR-REVIEW-v1
+repo: logos-boundary-literature
+status: active_policy
+
+named_rule:
+  id: BOUNDARY-CONTRIB-001
+  title: External Contributor Review Required
+  importance_default: P1
+  importance_sensitive: P0
+
+external_contributor_review_required_for:
+  - trust_hierarchy
+  - canon_status_policy
+  - source_intake_policy
+  - attribution_forgery_policy
+  - source_text_ingestion
+  - boundary_claim_records
+  - commentary_reception_claims
+  - corpus_records
+  - cross_repo_authority_rules
+
+never_authorized_by_this_policy:
+  - source_text_import_without_source_review
+  - canonical_scripture_claims
+  - cross_repo_contamination
+  - overriding_scripture
+  - equal_authority_to_scripture
+
+canonical_repos_not_relaxed:
+  - logos-scripture-graph
+
+routine_maintainer_controlled_changes:
+  - docs
+  - scaffolding
+  - planning
+  - schema_drafts
+  - tests
+  - templates
+
+normal_repository_controls_still_apply:
+  - validation
+  - maintainer_review_when_required
+  - contamination_controls
+  - source_intake_policy
+
+does_not_authorize:
+  - source_text_ingestion
+  - real_corpus_records
+  - boundary_claims_as_canonical_truth
+  - boundary_repo_override_of_scripture
+  - boundary_repo_equal_authority_to_scripture

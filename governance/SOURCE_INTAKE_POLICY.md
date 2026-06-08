@@ -33,6 +33,11 @@ Before any source is imported, stored, cited, or summarized as data:
 8. document provenance;
 9. pass human source review.
 
+External contributor changes that affect source-intake policy or source text ingestion require
+maintainer review before merge under `BOUNDARY-CONTRIB-001 — External Contributor Review Required`.
+This contributor-review policy does not authorize source-text import, real corpus records,
+canonical Scripture records, or boundary claims as canonical truth.
+
 ## No Text Import Yet
 
 Do not paste, download, normalize, or stage source texts. This applies to copyrighted texts,
