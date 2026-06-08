@@ -39,6 +39,19 @@ minimum never above, canonical Scripture authority.
 If a task appears to require boundary material to modify canonical Scripture outputs, stop and
 report.
 
+## Boundary-Originated Higher-Layer Changes
+
+Boundary-originated requests must not treat higher-authority governance as a surface to route
+around. If a boundary task appears to require changing or bypassing governance-layer policy,
+canonical Scripture authority, repository-link contracts, routing policy, trust hierarchy, or
+canonical scope, stop and emit the required warning from
+`governance/BOUNDARY_GOVERNANCE_CONSTRAINTS.md`.
+
+Only Lowell Wong, as project owner, may authorize a boundary-originated request to change
+higher-authority governance, canonical Scripture authority, repository-link contracts, canonical
+scope, trust hierarchy, or cross-repo policy. Contributor consensus, contributor volume, automated
+recommendation, agent routing, and boundary-layer operational need are not sufficient authority.
+
 ## Routing Table
 
 | User/task intent | Correct repo |
@@ -64,3 +77,6 @@ Scripture-local policy:
 
 Governance-repo follow-up is required because the local governance checkout had pre-existing dirty
 work during T002/T327A1.
+
+The governance registry is now live in `logos-governance-architecture`; this boundary repo mirrors
+the stop rules locally for agents entering here first.

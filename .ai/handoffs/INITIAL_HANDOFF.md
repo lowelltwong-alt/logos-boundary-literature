@@ -97,3 +97,49 @@ validation or invented dummy records, not real corpus import.
 ### Exact next action
 
 Review T003. Do not import source texts, add real corpus records, or create boundary claims.
+
+---
+
+## T004 Boundary Governance Stop Rules
+
+- task_id: T004
+- status: complete
+- updated_by: Codex
+
+### Files changed
+
+- AI_FRONT_DOOR.md
+- README.md
+- .ai/control/boundary_material_routing.yaml
+- .ai/control/contributor_review_policy.yaml
+- .ai/control/PROJECT_STATUS.md
+- .ai/handoffs/INITIAL_HANDOFF.md
+- governance/BOUNDARY_GOVERNANCE_CONSTRAINTS.md
+- governance/CONTAMINATION_CONTROLS.md
+- governance/CROSS_REPO_CONTRACT_WITH_LOGOS_SCRIPTURE_GRAPH.md
+- governance/RULES_REGISTRY.md
+- governance/THREE_REPO_ROUTING_GUARDRAILS.md
+- tests/test_boundary_governance_stop_rules.py
+
+### Decisions made
+
+- Added `BOUNDARY-GOV-001 - Governance Is Constraint, Not Obstacle`.
+- Added `BOUNDARY-GOV-002 - Owner-Reserved Authorization for Boundary-Originated Higher-Layer Changes`.
+- Boundary-originated requests that conflict with governance-layer policy, canonical Scripture
+  authority, repository-link contracts, routing policy, trust hierarchy, or canonical scope must
+  stop and be reviewed in the higher-authority repository.
+- Only Lowell Wong, as project owner, may authorize boundary-originated changes to those
+  higher-authority surfaces.
+- Contributor consensus, contributor volume, automated recommendation, agent routing, and
+  boundary-layer operational need are not sufficient authority.
+
+### Validation performed
+
+- `python -m pytest -q` passed: `17 passed`.
+- YAML parse checks passed.
+- `git diff --check` passed.
+
+### Exact next action
+
+Run validation and review T004. Do not import source texts, add real corpus records, create
+boundary claims, or request higher-authority changes from this boundary layer.

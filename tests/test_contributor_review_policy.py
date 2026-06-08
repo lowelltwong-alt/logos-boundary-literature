@@ -84,7 +84,7 @@ def test_policy_is_non_authorizing_and_does_not_relax_scripture_graph() -> None:
 
 def test_public_docs_contain_required_rule_language() -> None:
     combined = "\n".join(read(path) for path in PUBLIC_SURFACES)
-    assert "BOUNDARY-CONTRIB-001 — External Contributor Review Required" in combined
+    assert "BOUNDARY-CONTRIB-001 - External Contributor Review Required" in combined
     assert "External contributor changes" in combined
     assert "maintainer review before merge" in combined
     assert "trust hierarchy" in combined

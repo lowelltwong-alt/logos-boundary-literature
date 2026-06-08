@@ -32,6 +32,12 @@ Boundary material must not override, contaminate, or become equal authority to c
 If a task appears to require boundary material to modify canonical Scripture outputs, stop and
 report.
 
+Boundary-originated requests that conflict with higher-authority governance must also stop and be
+reviewed in the higher-authority repository. `logos-boundary-literature` must not automate, route,
+or implement changes to governance-layer policy, canonical Scripture authority, repository-link
+contracts, routing policy, trust hierarchy, or canonical scope. Only Lowell Wong, as project owner,
+may authorize a boundary-originated request to change those higher-authority surfaces.
+
 ## Trust Hierarchy
 
 1. `canonical_scripture_reference_only`
@@ -90,6 +96,16 @@ records, and does not allow boundary material to override or equal canonical Scr
 
 See [`governance/CONTRIBUTOR_REVIEW_POLICY.md`](governance/CONTRIBUTOR_REVIEW_POLICY.md) and
 [`.ai/control/contributor_review_policy.yaml`](.ai/control/contributor_review_policy.yaml).
+
+## Boundary Governance Constraints
+
+`BOUNDARY-GOV-001 - Governance Is Constraint, Not Obstacle` and `BOUNDARY-GOV-002 -
+Owner-Reserved Authorization for Boundary-Originated Higher-Layer Changes` prevent boundary-layer
+tasks from treating governance, canonical Scripture authority, repository-link contracts, routing
+policy, trust hierarchy, or canonical scope as surfaces to route around.
+
+See [`governance/BOUNDARY_GOVERNANCE_CONSTRAINTS.md`](governance/BOUNDARY_GOVERNANCE_CONSTRAINTS.md)
+and [`.ai/control/boundary_material_routing.yaml`](.ai/control/boundary_material_routing.yaml).
 
 ## No Text Import Yet
 

@@ -51,6 +51,16 @@ Claims from this repo must not override, contaminate, or become equal authority 
 Scripture. If a task appears to require boundary material to modify canonical Scripture outputs,
 stop and report.
 
+Boundary-originated requests must not be used to change or bypass governance-layer policy,
+canonical Scripture authority, repository-link contracts, routing policy, trust hierarchy, or
+canonical scope. Such requests must stop and be reviewed directly in the higher-authority
+repository.
+
+Only Lowell Wong, as project owner, may authorize a boundary-originated request to change
+higher-authority governance, canonical Scripture authority, repository-link contracts, canonical
+scope, trust hierarchy, or cross-repo policy. Contributor consensus, contributor volume, automated
+recommendation, agent routing, and boundary-layer operational need are not sufficient authority.
+
 ## Contract Fields For Future Relationships
 
 - source repo;
@@ -72,3 +82,5 @@ stop and report.
 - using generic `related_to`;
 - defaulting boundary claims into canonical answers;
 - hiding tradition scope.
+- routing around higher-authority governance;
+- requesting canonical Scripture or cross-repo policy changes from the boundary layer.

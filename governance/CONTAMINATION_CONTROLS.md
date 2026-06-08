@@ -67,3 +67,21 @@ intake, source text ingestion, or attribution/forgery labels require maintainer 
 This review policy applies only to `logos-boundary-literature`. It does not apply to
 `logos-scripture-graph` and does not change its rules, does not authorize source-text ingestion, and does not permit boundary
 repo material to override or equal Scripture.
+
+## Boundary Governance Constraint
+
+Boundary-layer requests must treat governance as binding authority. If a boundary-originated task
+appears to require changing or bypassing governance-layer policy, canonical Scripture authority,
+repository-link contracts, routing policy, trust hierarchy, or canonical scope, stop and report.
+
+Do not automate, route, bundle, or implement that change from this repo. Only Lowell Wong, as
+project owner, may authorize a boundary-originated request to change higher-authority governance,
+canonical Scripture authority, repository-link contracts, canonical scope, trust hierarchy, or
+cross-repo policy.
+
+Required local policy:
+
+- `BOUNDARY-GOV-001 - Governance Is Constraint, Not Obstacle`
+- `BOUNDARY-GOV-002 - Owner-Reserved Authorization for Boundary-Originated Higher-Layer Changes`
+- `.ai/control/boundary_material_routing.yaml`
+- `governance/BOUNDARY_GOVERNANCE_CONSTRAINTS.md`
