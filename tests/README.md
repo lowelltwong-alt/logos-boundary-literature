@@ -15,6 +15,8 @@ Current executable checks cover:
 - method profiles for dating, source-language, variant, citation-mode, and discovery review;
 - timeline checkpoints that separate artifact dates, discovery/publication/digitization
   dates, debate state, and candidate apologetic claims;
+- patristic reconstruction questions that require citation-mode, edition,
+  source-language, and attribution review before promotion;
 - invented reliability-evidence fixture loading;
 - text-storage flags staying disabled;
 - candidate claims staying unpromoted and non-authoritative.

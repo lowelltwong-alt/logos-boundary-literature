@@ -90,6 +90,63 @@ CREATE TABLE evidence_project (
   review_status TEXT NOT NULL DEFAULT 'draft'
 );
 
+CREATE TABLE boundary_patristic_reconstruction_question (
+  boundary_reconstruction_id TEXT PRIMARY KEY,
+  evidence_project_id TEXT NOT NULL REFERENCES evidence_project(evidence_project_id),
+  boundary_citation_id TEXT REFERENCES boundary_patristic_citation_candidate(boundary_citation_id),
+  scripture_reference_id TEXT NOT NULL,
+  reconstruction_scope TEXT NOT NULL CHECK (
+    reconstruction_scope IN (
+      'passage_reference',
+      'book_or_section',
+      'corpus_subset',
+      'canon_wide_candidate',
+      'essential_doctrine_reference',
+      'method_only'
+    )
+  ),
+  source_corpus_scope TEXT NOT NULL CHECK (
+    source_corpus_scope IN (
+      'ante_nicene',
+      'nicene_and_post_nicene',
+      'medieval',
+      'mixed',
+      'unknown'
+    )
+  ),
+  citation_mode_policy TEXT NOT NULL CHECK (
+    citation_mode_policy IN (
+      'direct_quotations_only',
+      'direct_and_indirect_with_labels',
+      'all_modes_separated',
+      'unknown_requires_review'
+    )
+  ),
+  reconstruction_claim_status TEXT NOT NULL DEFAULT 'candidate' CHECK (
+    reconstruction_claim_status IN ('candidate', 'proposed', 'reviewed', 'rejected')
+  ),
+  corpus_boundary_note TEXT NOT NULL,
+  edition_basis TEXT NOT NULL,
+  translation_basis TEXT NOT NULL,
+  coverage_summary TEXT NOT NULL,
+  candidate_claim_summary TEXT NOT NULL,
+  requires_critical_edition_review INTEGER NOT NULL DEFAULT 1 CHECK (requires_critical_edition_review IN (0, 1)),
+  requires_source_language_review INTEGER NOT NULL DEFAULT 1 CHECK (requires_source_language_review IN (0, 1)),
+  requires_citation_mode_review INTEGER NOT NULL DEFAULT 1 CHECK (requires_citation_mode_review IN (0, 1)),
+  requires_attribution_review INTEGER NOT NULL DEFAULT 1 CHECK (requires_attribution_review IN (0, 1)),
+  stores_patristic_source_text INTEGER NOT NULL DEFAULT 0 CHECK (stores_patristic_source_text = 0),
+  stores_scripture_text INTEGER NOT NULL DEFAULT 0 CHECK (stores_scripture_text = 0),
+  reconstructs_scripture_authority INTEGER NOT NULL DEFAULT 0 CHECK (reconstructs_scripture_authority = 0),
+  source_basis TEXT NOT NULL,
+  method_note TEXT NOT NULL,
+  confidence_level TEXT NOT NULL DEFAULT 'unknown',
+  tradition_scope TEXT NOT NULL DEFAULT 'not_applicable',
+  profile_scope TEXT NOT NULL DEFAULT 'not_applicable',
+  provenance_note TEXT NOT NULL,
+  review_status TEXT NOT NULL DEFAULT 'unreviewed',
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
 CREATE TABLE evidence_method_profile (
   evidence_method_profile_id TEXT PRIMARY KEY,
   method_scope TEXT NOT NULL CHECK (
