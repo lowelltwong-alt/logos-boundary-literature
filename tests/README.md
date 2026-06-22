@@ -17,6 +17,8 @@ Current executable checks cover:
   dates, debate state, and candidate apologetic claims;
 - patristic reconstruction questions that require citation-mode, edition,
   source-language, and attribution review before promotion;
+- early-tradition questions that block overconfident date and apologetic-force
+  claims without reviewed source, method, language, context, and dissent evidence;
 - invented reliability-evidence fixture loading;
 - text-storage flags staying disabled;
 - candidate claims staying unpromoted and non-authoritative.

@@ -30,6 +30,7 @@ This file is the navigation map for agents and maintainers entering
 - `schemas/reliability_evidence_method_profiles.md` - review-method profiles for dating, language, variants, patristic citations, and discovery context.
 - `schemas/reliability_evidence_timeline_checkpoints.md` - discovery and knowledge-timeline checkpoints for what was known when.
 - `schemas/reliability_evidence_patristic_reconstruction.md` - patristic reconstruction question scaffold with citation-mode guardrails.
+- `schemas/reliability_evidence_early_traditions.md` - early creed, oral tradition, and early devotion question scaffold.
 - `schemas/reliability_evidence.sqlite.schema.sql` - SQLite scaffold for boundary and derived evidence metadata.
 
 ## Routing Summary
