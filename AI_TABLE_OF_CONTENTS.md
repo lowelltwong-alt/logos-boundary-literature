@@ -21,12 +21,19 @@ This file is the navigation map for agents and maintainers entering
 - `governance/CANON_AND_AUTHORITY_POLICY.md` - canon and authority distinctions.
 - `governance/BOUNDARY_GOVERNANCE_CONSTRAINTS.md` - P0 stop rules for boundary-originated pressure on higher-authority repos.
 
+## Schemas And Database Planning
+
+- `schemas/README.md` - schema index and source-ingestion warning.
+- `schemas/reliability_evidence_database_plan.md` - Bible reliability/provenance evidence database plan.
+- `schemas/reliability_evidence.sqlite.schema.sql` - SQLite scaffold for boundary and derived evidence metadata.
+
 ## Routing Summary
 
 - Canonical 66-book Scripture text, chunks, manuscript witnesses, variants, and canonical Scripture records belong in `logos-scripture-graph`.
 - Commentaries, church-father citations, patristic reception, theologian writings, attribution status, and reception-history metadata belong here.
 - Denominational and theological development over time belongs in planned `logos-doctrine-genealogy` after governance registration.
 - Unified evidence products are derived artifacts. They may join labels and references, but they must not transfer authority.
+- Bible reliability/provenance database work starts here only as metadata and derived evidence planning. Actual Scripture manuscript, fragment, variant, and canonical evidence records belong in `logos-scripture-graph`.
 
 ## AI Rule
 

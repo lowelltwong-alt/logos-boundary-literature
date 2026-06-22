@@ -90,6 +90,10 @@ AI_TABLE_OF_CONTENTS.md  AI navigation map for this repo.
 ROADMAP.md       Source-layer roadmap for patristic, commentary, theologian, and denominational reception.
 ```
 
+The first reliability/provenance database scaffold lives under `schemas/` as a planning artifact.
+It defines only metadata and derived-evidence table boundaries; it does not import source texts or
+canonical Scripture records.
+
 ## Contamination Controls
 
 - Boundary texts may reference Scripture.
@@ -102,6 +106,8 @@ ROADMAP.md       Source-layer roadmap for patristic, commentary, theologian, and
 - Do not place commentary, patristic, theologian, or denomination-profile data in canonical
   Scripture tables or default Scripture retrieval.
 - Use `boundary_*` or clearly derived `evidence_*` namespaces for future unified reports.
+- Future reliability/provenance reports may reference `scripture_*` records from
+  `logos-scripture-graph`, but this repo must not define or own those records.
 
 ## Contributor Review
 
