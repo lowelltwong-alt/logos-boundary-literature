@@ -90,6 +90,76 @@ CREATE TABLE evidence_project (
   review_status TEXT NOT NULL DEFAULT 'draft'
 );
 
+CREATE TABLE evidence_research_intake_queue (
+  evidence_intake_id TEXT PRIMARY KEY,
+  evidence_project_id TEXT NOT NULL REFERENCES evidence_project(evidence_project_id),
+  evidence_lane TEXT NOT NULL CHECK (
+    evidence_lane IN (
+      'dead_sea_scrolls_ot_witness',
+      'nt_papyri_codices',
+      'textual_variants_copy_abundance',
+      'early_creed_oral_tradition',
+      'patristic_reception_reconstruction',
+      'discovery_timeline',
+      'method_bibliography'
+    )
+  ),
+  source_locator TEXT NOT NULL,
+  source_kind TEXT NOT NULL CHECK (
+    source_kind IN (
+      'official_catalog',
+      'museum_or_library_record',
+      'academic_project',
+      'peer_reviewed_article',
+      'scholarly_book',
+      'primary_source_reference',
+      'other'
+    )
+  ),
+  proposed_target_repo TEXT NOT NULL CHECK (
+    proposed_target_repo IN (
+      'logos-boundary-literature',
+      'logos-scripture-graph',
+      'logos-doctrine-genealogy',
+      'external_catalog_only',
+      'undecided'
+    )
+  ),
+  proposed_record_namespace TEXT NOT NULL CHECK (
+    proposed_record_namespace IN (
+      'boundary_*',
+      'evidence_*',
+      'scripture_*',
+      'doctrine_*',
+      'external_catalog_only',
+      'undecided'
+    )
+  ),
+  intake_claim_status TEXT NOT NULL CHECK (
+    intake_claim_status IN (
+      'confirmed_source_metadata',
+      'candidate_claim',
+      'mixed_requires_split',
+      'unknown_requires_review'
+    )
+  ),
+  confirmed_fact_summary TEXT NOT NULL DEFAULT 'none_reviewed',
+  candidate_claim_summary TEXT NOT NULL DEFAULT 'none',
+  stores_source_text INTEGER NOT NULL DEFAULT 0 CHECK (stores_source_text = 0),
+  stores_scripture_text INTEGER NOT NULL DEFAULT 0 CHECK (stores_scripture_text = 0),
+  stores_transcription_text INTEGER NOT NULL DEFAULT 0 CHECK (stores_transcription_text = 0),
+  requires_license_review INTEGER NOT NULL DEFAULT 1 CHECK (requires_license_review IN (0, 1)),
+  requires_expert_review INTEGER NOT NULL DEFAULT 1 CHECK (requires_expert_review IN (0, 1)),
+  source_basis TEXT NOT NULL,
+  method_note TEXT NOT NULL,
+  confidence_level TEXT NOT NULL DEFAULT 'unknown',
+  tradition_scope TEXT NOT NULL DEFAULT 'not_applicable',
+  profile_scope TEXT NOT NULL DEFAULT 'not_applicable',
+  provenance_note TEXT NOT NULL,
+  review_status TEXT NOT NULL DEFAULT 'unreviewed',
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
 CREATE TABLE evidence_external_source (
   evidence_source_id TEXT PRIMARY KEY,
   source_title TEXT NOT NULL,

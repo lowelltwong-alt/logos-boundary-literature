@@ -12,5 +12,7 @@ They do not authorize source ingestion and do not define canonical Scripture rec
   provenance, manuscript-evidence, reception, and apologetics research.
 - `reliability_evidence_source_spine.md`: source-spine scaffold separating confirmed
   source metadata from candidate apologetic or historical claims.
+- `reliability_evidence_intake_queue.md`: pre-evidence intake queue plan for
+  source candidates, repo routing, and review gates.
 - `reliability_evidence.sqlite.schema.sql`: SQLite scaffold for boundary-owned and
   derived evidence tables. It does not define canonical Scripture tables or store source text.
