@@ -9,6 +9,7 @@ SCHEMA = ROOT / "schemas" / "reliability_evidence.sqlite.schema.sql"
 PLAN = ROOT / "schemas" / "reliability_evidence_database_plan.md"
 SOURCE_SPINE = ROOT / "schemas" / "reliability_evidence_source_spine.md"
 INTAKE_QUEUE = ROOT / "schemas" / "reliability_evidence_intake_queue.md"
+METHOD_PROFILES = ROOT / "schemas" / "reliability_evidence_method_profiles.md"
 FIXTURE = ROOT / "tests" / "fixtures" / "reliability_evidence_example_seed.sql"
 
 
@@ -86,6 +87,8 @@ def test_reliability_schema_does_not_store_source_text_or_scripture_text() -> No
 def test_reliability_schema_requires_anti_guessing_fields() -> None:
     conn = schema_connection()
     for table in [
+        "evidence_method_profile",
+        "evidence_intake_method_requirement",
         "evidence_research_intake_queue",
         "evidence_manuscript_witness_ref",
         "evidence_textual_question_ref",
@@ -115,6 +118,7 @@ def test_reliability_schema_has_source_intake_queue_guardrails() -> None:
     columns = column_names(conn, "evidence_research_intake_queue")
     assert {
         "evidence_lane",
+        "evidence_method_profile_id",
         "source_locator",
         "proposed_target_repo",
         "proposed_record_namespace",
@@ -149,6 +153,76 @@ def test_reliability_schema_has_source_intake_queue_guardrails() -> None:
     assert "'boundary_*'" in sql
     assert "'evidence_*'" in sql
     assert "'canonical_*'" not in sql
+
+
+def test_reliability_schema_has_method_profile_guardrails() -> None:
+    conn = schema_connection()
+    columns = column_names(conn, "evidence_method_profile")
+    assert {
+        "method_scope",
+        "method_title",
+        "source_locator",
+        "source_kind",
+        "governs_evidence_lane",
+        "requires_source_language_review",
+        "requires_dating_review",
+        "requires_material_review",
+        "requires_citation_mode_review",
+        "requires_variant_method_review",
+        "requires_discovery_context_review",
+        "prohibits_ai_promotion",
+        "source_basis",
+        "method_note",
+        "confidence_level",
+        "provenance_note",
+        "review_status",
+    }.issubset(columns)
+
+    sql = load_schema()
+    for method_scope in [
+        "source_catalog_metadata_review",
+        "palaeographic_dating_review",
+        "material_and_image_review",
+        "textual_variant_method_review",
+        "patristic_citation_mode_review",
+        "early_creed_tradition_review",
+        "discovery_timeline_review",
+        "source_language_expertise_review",
+    ]:
+        assert method_scope in sql
+
+    assert "prohibits_ai_promotion INTEGER NOT NULL DEFAULT 1" in sql
+
+
+def test_reliability_schema_has_method_requirement_guardrails() -> None:
+    conn = schema_connection()
+    columns = column_names(conn, "evidence_intake_method_requirement")
+    assert {
+        "evidence_intake_id",
+        "evidence_method_profile_id",
+        "requirement_role",
+        "required_before_status",
+        "satisfied",
+        "source_basis",
+        "method_note",
+        "confidence_level",
+        "provenance_note",
+        "review_status",
+    }.issubset(columns)
+
+    sql = load_schema()
+    for role in [
+        "primary_method",
+        "additional_review",
+        "blocking_review",
+        "source_access_review",
+        "language_review",
+        "dating_review",
+        "citation_mode_review",
+        "discovery_context_review",
+    ]:
+        assert role in sql
+    assert "satisfied INTEGER NOT NULL DEFAULT 0 CHECK (satisfied = 0)" in sql
 
 
 def test_reliability_plan_declares_repo_placement_and_source_spine() -> None:
@@ -191,6 +265,22 @@ def test_reliability_intake_queue_plan_declares_lanes_and_stop_rules() -> None:
     assert "https://www.deadseascrolls.org.il/" in text
     assert "https://www.uni-muenster.de/INTF/en/" in text
     assert "https://manuscripts.csntm.org/manuscript/View/GA_P52" in text
+
+
+def test_reliability_method_profiles_plan_declares_review_methods() -> None:
+    text = METHOD_PROFILES.read_text(encoding="utf-8")
+    assert "Method profiles describe how a future evidence claim must be reviewed" in text
+    assert "`source_catalog_metadata_review`" in text
+    assert "`palaeographic_dating_review`" in text
+    assert "`textual_variant_method_review`" in text
+    assert "`patristic_citation_mode_review`" in text
+    assert "`early_creed_tradition_review`" in text
+    assert "`discovery_timeline_review`" in text
+    assert "`source_language_expertise_review`" in text
+    assert "For this project, the default answer to AI promotion is always no" in text
+    assert "An intake item may require several method profiles" in text
+    assert "https://www.uni-muenster.de/INTF/en/" in text
+    assert "https://www.digitalcollections.manchester.ac.uk/view/MS-GREEK-P-00457" in text
 
 
 def test_reliability_fixture_loads_as_example_only_metadata() -> None:
@@ -262,6 +352,16 @@ def test_reliability_fixture_claims_cannot_promote_or_transfer_authority() -> No
     assert conn.execute(
         "SELECT may_promote FROM evidence_anti_guessing_audit"
     ).fetchall() == [(0,)]
+    assert set(
+        conn.execute(
+            "SELECT prohibits_ai_promotion, review_status FROM evidence_method_profile"
+        ).fetchall()
+    ) == {(1, "unreviewed")}
+    assert set(
+        conn.execute(
+            "SELECT satisfied, review_status FROM evidence_intake_method_requirement"
+        ).fetchall()
+    ) == {(0, "unreviewed")}
 
 
 def test_reliability_fixture_intake_queue_covers_all_lanes_without_promotion() -> None:
@@ -293,3 +393,63 @@ def test_reliability_fixture_intake_queue_covers_all_lanes_without_promotion() -
     assert any(row[1] == "boundary_*" for row in rows)
     assert any(row[2] == "candidate_claim" for row in rows)
     assert any(row[2] == "mixed_requires_split" for row in rows)
+
+
+def test_reliability_fixture_method_profiles_cover_review_needs() -> None:
+    conn = fixture_connection()
+    method_scopes = {
+        row[0]
+        for row in conn.execute("SELECT method_scope FROM evidence_method_profile").fetchall()
+    }
+    assert method_scopes == {
+        "source_catalog_metadata_review",
+        "palaeographic_dating_review",
+        "material_and_image_review",
+        "textual_variant_method_review",
+        "patristic_citation_mode_review",
+        "early_creed_tradition_review",
+        "discovery_timeline_review",
+        "source_language_expertise_review",
+    }
+
+    assert conn.execute(
+        """
+        SELECT COUNT(*)
+        FROM evidence_research_intake_queue
+        WHERE evidence_method_profile_id IS NULL
+        """
+    ).fetchone() == (0,)
+    assert conn.execute(
+        """
+        SELECT COUNT(*)
+        FROM evidence_method_profile
+        WHERE requires_source_language_review = 1
+        """
+    ).fetchone()[0] >= 4
+    assert conn.execute(
+        """
+        SELECT COUNT(*)
+        FROM evidence_method_profile
+        WHERE requires_citation_mode_review = 1
+        """
+    ).fetchone()[0] == 1
+    assert conn.execute(
+        """
+        SELECT COUNT(*)
+        FROM evidence_method_profile
+        WHERE requires_discovery_context_review = 1
+        """
+    ).fetchone()[0] == 1
+    assert conn.execute(
+        """
+        SELECT COUNT(DISTINCT evidence_intake_id)
+        FROM evidence_intake_method_requirement
+        """
+    ).fetchone()[0] == 7
+    assert conn.execute(
+        """
+        SELECT COUNT(*)
+        FROM evidence_intake_method_requirement
+        WHERE requirement_role = 'language_review'
+        """
+    ).fetchone()[0] >= 3
