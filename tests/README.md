@@ -13,6 +13,8 @@ Current executable checks cover:
 - namespace separation for `boundary_*` and `evidence_*` tables;
 - pre-evidence intake queue lanes, repo routing, text-storage flags, and review gates;
 - method profiles for dating, source-language, variant, citation-mode, and discovery review;
+- timeline checkpoints that separate artifact dates, discovery/publication/digitization
+  dates, debate state, and candidate apologetic claims;
 - invented reliability-evidence fixture loading;
 - text-storage flags staying disabled;
 - candidate claims staying unpromoted and non-authoritative.

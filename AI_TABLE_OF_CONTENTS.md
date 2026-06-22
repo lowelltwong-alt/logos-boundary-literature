@@ -28,6 +28,7 @@ This file is the navigation map for agents and maintainers entering
 - `schemas/reliability_evidence_source_spine.md` - starting source spine with confirmed metadata and candidate-claim separation.
 - `schemas/reliability_evidence_intake_queue.md` - pre-evidence intake queue for source candidates, repo routing, and review gates.
 - `schemas/reliability_evidence_method_profiles.md` - review-method profiles for dating, language, variants, patristic citations, and discovery context.
+- `schemas/reliability_evidence_timeline_checkpoints.md` - discovery and knowledge-timeline checkpoints for what was known when.
 - `schemas/reliability_evidence.sqlite.schema.sql` - SQLite scaffold for boundary and derived evidence metadata.
 
 ## Routing Summary

@@ -381,6 +381,74 @@ CREATE TABLE evidence_claim_candidate (
   review_status TEXT NOT NULL DEFAULT 'unreviewed'
 );
 
+CREATE TABLE evidence_timeline_checkpoint (
+  evidence_timeline_checkpoint_id TEXT PRIMARY KEY,
+  evidence_project_id TEXT NOT NULL REFERENCES evidence_project(evidence_project_id),
+  evidence_intake_id TEXT REFERENCES evidence_research_intake_queue(evidence_intake_id),
+  evidence_source_id TEXT REFERENCES evidence_external_source(evidence_source_id),
+  evidence_witness_ref_id TEXT REFERENCES evidence_manuscript_witness_ref(evidence_witness_ref_id),
+  evidence_question_id TEXT REFERENCES evidence_textual_question_ref(evidence_question_id),
+  evidence_discovery_event_id TEXT REFERENCES evidence_discovery_event(evidence_discovery_event_id),
+  evidence_claim_id TEXT REFERENCES evidence_claim_candidate(evidence_claim_id),
+  checkpoint_type TEXT NOT NULL CHECK (
+    checkpoint_type IN (
+      'artifact_copying_or_composition_range',
+      'modern_discovery',
+      'acquisition_or_holding',
+      'cataloging_or_publication',
+      'digitization_or_public_access',
+      'redating_or_method_update',
+      'scholarly_debate_state',
+      'apologetic_claim_boundary'
+    )
+  ),
+  knowledge_scope TEXT NOT NULL CHECK (
+    knowledge_scope IN (
+      'source_community',
+      'holding_institution',
+      'scholarly_publication',
+      'public_digital_access',
+      'project_internal_review',
+      'unknown'
+    )
+  ),
+  knowledge_claim_status TEXT NOT NULL CHECK (
+    knowledge_claim_status IN (
+      'confirmed_source_metadata',
+      'candidate_claim',
+      'mixed_requires_split',
+      'unknown_requires_review'
+    )
+  ),
+  artifact_date_start INTEGER,
+  artifact_date_end INTEGER,
+  modern_event_date_start INTEGER,
+  modern_event_date_end INTEGER,
+  date_precision TEXT NOT NULL DEFAULT 'unknown' CHECK (
+    date_precision IN (
+      'exact_year',
+      'year_range',
+      'century_range',
+      'unknown',
+      'not_applicable'
+    )
+  ),
+  date_basis TEXT NOT NULL,
+  known_state_summary TEXT NOT NULL,
+  confirmed_fact_summary TEXT NOT NULL DEFAULT 'none_reviewed',
+  candidate_claim_summary TEXT NOT NULL DEFAULT 'none',
+  separates_artifact_date_from_discovery_date INTEGER NOT NULL DEFAULT 1 CHECK (separates_artifact_date_from_discovery_date = 1),
+  stores_source_text INTEGER NOT NULL DEFAULT 0 CHECK (stores_source_text = 0),
+  stores_scripture_text INTEGER NOT NULL DEFAULT 0 CHECK (stores_scripture_text = 0),
+  stores_transcription_text INTEGER NOT NULL DEFAULT 0 CHECK (stores_transcription_text = 0),
+  source_basis TEXT NOT NULL,
+  method_note TEXT NOT NULL,
+  confidence_level TEXT NOT NULL DEFAULT 'unknown',
+  provenance_note TEXT NOT NULL,
+  review_status TEXT NOT NULL DEFAULT 'unreviewed',
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
 CREATE TABLE evidence_claim_source_link (
   evidence_claim_source_link_id TEXT PRIMARY KEY,
   evidence_claim_id TEXT NOT NULL REFERENCES evidence_claim_candidate(evidence_claim_id),
