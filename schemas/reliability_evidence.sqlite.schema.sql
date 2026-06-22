@@ -90,6 +90,60 @@ CREATE TABLE evidence_project (
   review_status TEXT NOT NULL DEFAULT 'draft'
 );
 
+CREATE TABLE evidence_method_profile (
+  evidence_method_profile_id TEXT PRIMARY KEY,
+  method_scope TEXT NOT NULL CHECK (
+    method_scope IN (
+      'source_catalog_metadata_review',
+      'palaeographic_dating_review',
+      'material_and_image_review',
+      'textual_variant_method_review',
+      'patristic_citation_mode_review',
+      'early_creed_tradition_review',
+      'discovery_timeline_review',
+      'source_language_expertise_review'
+    )
+  ),
+  method_title TEXT NOT NULL,
+  source_locator TEXT NOT NULL,
+  source_kind TEXT NOT NULL CHECK (
+    source_kind IN (
+      'official_catalog',
+      'museum_or_library_record',
+      'academic_project',
+      'peer_reviewed_article',
+      'scholarly_book',
+      'primary_source_reference',
+      'other'
+    )
+  ),
+  governs_evidence_lane TEXT NOT NULL CHECK (
+    governs_evidence_lane IN (
+      'dead_sea_scrolls_ot_witness',
+      'nt_papyri_codices',
+      'textual_variants_copy_abundance',
+      'early_creed_oral_tradition',
+      'patristic_reception_reconstruction',
+      'discovery_timeline',
+      'method_bibliography',
+      'cross_lane'
+    )
+  ),
+  requires_source_language_review INTEGER NOT NULL DEFAULT 0 CHECK (requires_source_language_review IN (0, 1)),
+  requires_dating_review INTEGER NOT NULL DEFAULT 0 CHECK (requires_dating_review IN (0, 1)),
+  requires_material_review INTEGER NOT NULL DEFAULT 0 CHECK (requires_material_review IN (0, 1)),
+  requires_citation_mode_review INTEGER NOT NULL DEFAULT 0 CHECK (requires_citation_mode_review IN (0, 1)),
+  requires_variant_method_review INTEGER NOT NULL DEFAULT 0 CHECK (requires_variant_method_review IN (0, 1)),
+  requires_discovery_context_review INTEGER NOT NULL DEFAULT 0 CHECK (requires_discovery_context_review IN (0, 1)),
+  prohibits_ai_promotion INTEGER NOT NULL DEFAULT 1 CHECK (prohibits_ai_promotion = 1),
+  source_basis TEXT NOT NULL,
+  method_note TEXT NOT NULL,
+  confidence_level TEXT NOT NULL DEFAULT 'unknown',
+  provenance_note TEXT NOT NULL,
+  review_status TEXT NOT NULL DEFAULT 'unreviewed',
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
 CREATE TABLE evidence_research_intake_queue (
   evidence_intake_id TEXT PRIMARY KEY,
   evidence_project_id TEXT NOT NULL REFERENCES evidence_project(evidence_project_id),
@@ -104,6 +158,7 @@ CREATE TABLE evidence_research_intake_queue (
       'method_bibliography'
     )
   ),
+  evidence_method_profile_id TEXT REFERENCES evidence_method_profile(evidence_method_profile_id),
   source_locator TEXT NOT NULL,
   source_kind TEXT NOT NULL CHECK (
     source_kind IN (
@@ -158,6 +213,38 @@ CREATE TABLE evidence_research_intake_queue (
   provenance_note TEXT NOT NULL,
   review_status TEXT NOT NULL DEFAULT 'unreviewed',
   created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE evidence_intake_method_requirement (
+  evidence_intake_method_requirement_id TEXT PRIMARY KEY,
+  evidence_intake_id TEXT NOT NULL REFERENCES evidence_research_intake_queue(evidence_intake_id),
+  evidence_method_profile_id TEXT NOT NULL REFERENCES evidence_method_profile(evidence_method_profile_id),
+  requirement_role TEXT NOT NULL CHECK (
+    requirement_role IN (
+      'primary_method',
+      'additional_review',
+      'blocking_review',
+      'source_access_review',
+      'language_review',
+      'dating_review',
+      'citation_mode_review',
+      'discovery_context_review'
+    )
+  ),
+  required_before_status TEXT NOT NULL CHECK (
+    required_before_status IN (
+      'source_intake',
+      'candidate_to_proposed',
+      'proposed_to_reviewed',
+      'any_promotion'
+    )
+  ),
+  satisfied INTEGER NOT NULL DEFAULT 0 CHECK (satisfied = 0),
+  source_basis TEXT NOT NULL,
+  method_note TEXT NOT NULL,
+  confidence_level TEXT NOT NULL DEFAULT 'unknown',
+  provenance_note TEXT NOT NULL,
+  review_status TEXT NOT NULL DEFAULT 'unreviewed'
 );
 
 CREATE TABLE evidence_external_source (

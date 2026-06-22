@@ -12,6 +12,7 @@ Current executable checks cover:
 - SQLite reliability-evidence schema execution;
 - namespace separation for `boundary_*` and `evidence_*` tables;
 - pre-evidence intake queue lanes, repo routing, text-storage flags, and review gates;
+- method profiles for dating, source-language, variant, citation-mode, and discovery review;
 - invented reliability-evidence fixture loading;
 - text-storage flags staying disabled;
 - candidate claims staying unpromoted and non-authoritative.
