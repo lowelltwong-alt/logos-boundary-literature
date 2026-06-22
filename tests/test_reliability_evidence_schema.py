@@ -10,6 +10,7 @@ PLAN = ROOT / "schemas" / "reliability_evidence_database_plan.md"
 SOURCE_SPINE = ROOT / "schemas" / "reliability_evidence_source_spine.md"
 INTAKE_QUEUE = ROOT / "schemas" / "reliability_evidence_intake_queue.md"
 METHOD_PROFILES = ROOT / "schemas" / "reliability_evidence_method_profiles.md"
+TIMELINE_CHECKPOINTS = ROOT / "schemas" / "reliability_evidence_timeline_checkpoints.md"
 FIXTURE = ROOT / "tests" / "fixtures" / "reliability_evidence_example_seed.sql"
 
 
@@ -90,6 +91,7 @@ def test_reliability_schema_requires_anti_guessing_fields() -> None:
         "evidence_method_profile",
         "evidence_intake_method_requirement",
         "evidence_research_intake_queue",
+        "evidence_timeline_checkpoint",
         "evidence_manuscript_witness_ref",
         "evidence_textual_question_ref",
         "evidence_claim_candidate",
@@ -225,6 +227,48 @@ def test_reliability_schema_has_method_requirement_guardrails() -> None:
     assert "satisfied INTEGER NOT NULL DEFAULT 0 CHECK (satisfied = 0)" in sql
 
 
+def test_reliability_schema_has_timeline_checkpoint_guardrails() -> None:
+    conn = schema_connection()
+    columns = column_names(conn, "evidence_timeline_checkpoint")
+    assert {
+        "checkpoint_type",
+        "knowledge_scope",
+        "knowledge_claim_status",
+        "artifact_date_start",
+        "artifact_date_end",
+        "modern_event_date_start",
+        "modern_event_date_end",
+        "date_precision",
+        "date_basis",
+        "known_state_summary",
+        "confirmed_fact_summary",
+        "candidate_claim_summary",
+        "separates_artifact_date_from_discovery_date",
+        "stores_source_text",
+        "stores_scripture_text",
+        "stores_transcription_text",
+        "source_basis",
+        "method_note",
+        "confidence_level",
+        "provenance_note",
+        "review_status",
+    }.issubset(columns)
+
+    sql = load_schema()
+    for checkpoint_type in [
+        "artifact_copying_or_composition_range",
+        "modern_discovery",
+        "acquisition_or_holding",
+        "cataloging_or_publication",
+        "digitization_or_public_access",
+        "redating_or_method_update",
+        "scholarly_debate_state",
+        "apologetic_claim_boundary",
+    ]:
+        assert checkpoint_type in sql
+    assert "separates_artifact_date_from_discovery_date INTEGER NOT NULL DEFAULT 1" in sql
+
+
 def test_reliability_plan_declares_repo_placement_and_source_spine() -> None:
     text = PLAN.read_text(encoding="utf-8")
     assert "This scaffold starts in `logos-boundary-literature`" in text
@@ -283,6 +327,22 @@ def test_reliability_method_profiles_plan_declares_review_methods() -> None:
     assert "https://www.digitalcollections.manchester.ac.uk/view/MS-GREEK-P-00457" in text
 
 
+def test_reliability_timeline_checkpoints_plan_declares_date_separation() -> None:
+    text = TIMELINE_CHECKPOINTS.read_text(encoding="utf-8")
+    assert "Timeline checkpoints model what was known, by whom, and when" in text
+    assert "`artifact_copying_or_composition_range`" in text
+    assert "`modern_discovery`" in text
+    assert "`digitization_or_public_access`" in text
+    assert "`redating_or_method_update`" in text
+    assert "`scholarly_debate_state`" in text
+    assert "`apologetic_claim_boundary`" in text
+    assert "Do not confuse artifact/copied-text date with modern discovery date" in text
+    assert "Confirmed Source Metadata To Check" in text
+    assert "Candidate Claims To Keep Unreviewed" in text
+    assert "https://www.imj.org.il/en/wings/shrine-book/dead-sea-scrolls" in text
+    assert "https://www.codexsinaiticus.org/en/project/" in text
+
+
 def test_reliability_fixture_loads_as_example_only_metadata() -> None:
     conn = fixture_connection()
     tables = table_names(conn)
@@ -320,6 +380,14 @@ def test_reliability_fixture_keeps_text_storage_disabled() -> None:
             """
             SELECT stores_source_text, stores_scripture_text, stores_transcription_text
             FROM evidence_research_intake_queue
+            """
+        ).fetchall()
+    ) == {(0, 0, 0)}
+    assert set(
+        conn.execute(
+            """
+            SELECT stores_source_text, stores_scripture_text, stores_transcription_text
+            FROM evidence_timeline_checkpoint
             """
         ).fetchall()
     ) == {(0, 0, 0)}
@@ -362,6 +430,14 @@ def test_reliability_fixture_claims_cannot_promote_or_transfer_authority() -> No
             "SELECT satisfied, review_status FROM evidence_intake_method_requirement"
         ).fetchall()
     ) == {(0, "unreviewed")}
+    assert set(
+        conn.execute(
+            """
+            SELECT separates_artifact_date_from_discovery_date, review_status
+            FROM evidence_timeline_checkpoint
+            """
+        ).fetchall()
+    ) == {(1, "unreviewed")}
 
 
 def test_reliability_fixture_intake_queue_covers_all_lanes_without_promotion() -> None:
@@ -453,3 +529,34 @@ def test_reliability_fixture_method_profiles_cover_review_needs() -> None:
         WHERE requirement_role = 'language_review'
         """
     ).fetchone()[0] >= 3
+
+
+def test_reliability_fixture_timeline_checkpoints_cover_knowledge_states() -> None:
+    conn = fixture_connection()
+    checkpoint_types = {
+        row[0]
+        for row in conn.execute(
+            "SELECT checkpoint_type FROM evidence_timeline_checkpoint"
+        ).fetchall()
+    }
+    assert checkpoint_types == {
+        "artifact_copying_or_composition_range",
+        "modern_discovery",
+        "cataloging_or_publication",
+        "digitization_or_public_access",
+        "redating_or_method_update",
+        "scholarly_debate_state",
+        "apologetic_claim_boundary",
+    }
+
+    rows = conn.execute(
+        """
+        SELECT knowledge_claim_status, date_precision, review_status
+        FROM evidence_timeline_checkpoint
+        """
+    ).fetchall()
+    assert all(row[2] == "unreviewed" for row in rows)
+    assert any(row[0] == "confirmed_source_metadata" for row in rows)
+    assert any(row[0] == "candidate_claim" for row in rows)
+    assert any(row[0] == "mixed_requires_split" for row in rows)
+    assert set(row[1] for row in rows) == {"unknown"}
