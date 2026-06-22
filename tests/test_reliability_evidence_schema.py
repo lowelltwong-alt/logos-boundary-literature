@@ -11,6 +11,9 @@ SOURCE_SPINE = ROOT / "schemas" / "reliability_evidence_source_spine.md"
 INTAKE_QUEUE = ROOT / "schemas" / "reliability_evidence_intake_queue.md"
 METHOD_PROFILES = ROOT / "schemas" / "reliability_evidence_method_profiles.md"
 TIMELINE_CHECKPOINTS = ROOT / "schemas" / "reliability_evidence_timeline_checkpoints.md"
+PATRISTIC_RECONSTRUCTION = (
+    ROOT / "schemas" / "reliability_evidence_patristic_reconstruction.md"
+)
 FIXTURE = ROOT / "tests" / "fixtures" / "reliability_evidence_example_seed.sql"
 
 
@@ -92,6 +95,7 @@ def test_reliability_schema_requires_anti_guessing_fields() -> None:
         "evidence_intake_method_requirement",
         "evidence_research_intake_queue",
         "evidence_timeline_checkpoint",
+        "boundary_patristic_reconstruction_question",
         "evidence_manuscript_witness_ref",
         "evidence_textual_question_ref",
         "evidence_claim_candidate",
@@ -269,6 +273,49 @@ def test_reliability_schema_has_timeline_checkpoint_guardrails() -> None:
     assert "separates_artifact_date_from_discovery_date INTEGER NOT NULL DEFAULT 1" in sql
 
 
+def test_reliability_schema_has_patristic_reconstruction_guardrails() -> None:
+    conn = schema_connection()
+    columns = column_names(conn, "boundary_patristic_reconstruction_question")
+    assert {
+        "reconstruction_scope",
+        "source_corpus_scope",
+        "citation_mode_policy",
+        "reconstruction_claim_status",
+        "corpus_boundary_note",
+        "edition_basis",
+        "translation_basis",
+        "coverage_summary",
+        "candidate_claim_summary",
+        "requires_critical_edition_review",
+        "requires_source_language_review",
+        "requires_citation_mode_review",
+        "requires_attribution_review",
+        "stores_patristic_source_text",
+        "stores_scripture_text",
+        "reconstructs_scripture_authority",
+        "source_basis",
+        "method_note",
+        "confidence_level",
+        "tradition_scope",
+        "profile_scope",
+        "provenance_note",
+        "review_status",
+    }.issubset(columns)
+
+    sql = load_schema()
+    for scope in [
+        "passage_reference",
+        "book_or_section",
+        "corpus_subset",
+        "canon_wide_candidate",
+        "essential_doctrine_reference",
+        "method_only",
+    ]:
+        assert scope in sql
+    assert "stores_patristic_source_text INTEGER NOT NULL DEFAULT 0 CHECK (stores_patristic_source_text = 0)" in sql
+    assert "reconstructs_scripture_authority INTEGER NOT NULL DEFAULT 0" in sql
+
+
 def test_reliability_plan_declares_repo_placement_and_source_spine() -> None:
     text = PLAN.read_text(encoding="utf-8")
     assert "This scaffold starts in `logos-boundary-literature`" in text
@@ -343,6 +390,19 @@ def test_reliability_timeline_checkpoints_plan_declares_date_separation() -> Non
     assert "https://www.codexsinaiticus.org/en/project/" in text
 
 
+def test_reliability_patristic_reconstruction_plan_declares_source_limits() -> None:
+    text = PATRISTIC_RECONSTRUCTION.read_text(encoding="utf-8")
+    assert "This scaffold models questions about whether patristic citations" in text
+    assert "It does not assert that the Bible can be reconstructed from church fathers" in text
+    assert "`passage_reference`" in text
+    assert "`canon_wide_candidate`" in text
+    assert "`method_only`" in text
+    assert "direct quotation" in text
+    assert "treat church fathers as Scripture authority" in text
+    assert "https://www.biblindex.org/en/overview" in text
+    assert "https://ntvmr.uni-muenster.de/intfblog/-/blogs/patristic-citations-in-new-testament-textual-criticism" in text
+
+
 def test_reliability_fixture_loads_as_example_only_metadata() -> None:
     conn = fixture_connection()
     tables = table_names(conn)
@@ -394,6 +454,14 @@ def test_reliability_fixture_keeps_text_storage_disabled() -> None:
     assert conn.execute(
         "SELECT citation_text_stored FROM boundary_patristic_citation_candidate"
     ).fetchall() == [(0,)]
+    assert set(
+        conn.execute(
+            """
+            SELECT stores_patristic_source_text, stores_scripture_text
+            FROM boundary_patristic_reconstruction_question
+            """
+        ).fetchall()
+    ) == {(0, 0)}
     assert conn.execute(
         "SELECT stores_scripture_text FROM evidence_scripture_reference"
     ).fetchall() == [(0,)]
@@ -438,6 +506,14 @@ def test_reliability_fixture_claims_cannot_promote_or_transfer_authority() -> No
             """
         ).fetchall()
     ) == {(1, "unreviewed")}
+    assert set(
+        conn.execute(
+            """
+            SELECT reconstruction_claim_status, reconstructs_scripture_authority, review_status
+            FROM boundary_patristic_reconstruction_question
+            """
+        ).fetchall()
+    ) == {("candidate", 0, "unreviewed")}
 
 
 def test_reliability_fixture_intake_queue_covers_all_lanes_without_promotion() -> None:
@@ -560,3 +636,34 @@ def test_reliability_fixture_timeline_checkpoints_cover_knowledge_states() -> No
     assert any(row[0] == "candidate_claim" for row in rows)
     assert any(row[0] == "mixed_requires_split" for row in rows)
     assert set(row[1] for row in rows) == {"unknown"}
+
+
+def test_reliability_fixture_patristic_reconstruction_blocks_broad_claims() -> None:
+    conn = fixture_connection()
+    scopes = {
+        row[0]
+        for row in conn.execute(
+            "SELECT reconstruction_scope FROM boundary_patristic_reconstruction_question"
+        ).fetchall()
+    }
+    assert scopes == {
+        "passage_reference",
+        "canon_wide_candidate",
+        "method_only",
+    }
+
+    rows = conn.execute(
+        """
+        SELECT
+          citation_mode_policy,
+          requires_critical_edition_review,
+          requires_source_language_review,
+          requires_citation_mode_review,
+          requires_attribution_review,
+          confidence_level
+        FROM boundary_patristic_reconstruction_question
+        """
+    ).fetchall()
+    assert all(row[1:5] == (1, 1, 1, 1) for row in rows)
+    assert all(row[5] == "unknown" for row in rows)
+    assert any(row[0] == "unknown_requires_review" for row in rows)

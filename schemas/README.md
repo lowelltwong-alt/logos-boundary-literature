@@ -18,5 +18,7 @@ They do not authorize source ingestion and do not define canonical Scripture rec
   source-language, textual-variant, patristic-citation, and discovery-context review.
 - `reliability_evidence_timeline_checkpoints.md`: discovery and knowledge-timeline
   checkpoint plan for modeling what was known when.
+- `reliability_evidence_patristic_reconstruction.md`: metadata-only plan for
+  patristic reconstruction questions and citation-mode guardrails.
 - `reliability_evidence.sqlite.schema.sql`: SQLite scaffold for boundary-owned and
   derived evidence tables. It does not define canonical Scripture tables or store source text.
