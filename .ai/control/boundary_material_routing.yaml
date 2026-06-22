@@ -27,6 +27,9 @@ accepted_boundary_material_classes:
   - commentary_reception_corpus
   - josephus_philo_dss_qumran_corpora
   - patristic_reception_corpora
+  - church_father_citation_metadata
+  - theologian_writing_source_metadata
+  - denominational_reception_metadata
 
 route_to_scripture_graph:
   - canonical_66_scripture_passages
@@ -49,12 +52,22 @@ forbidden_in_boundary_repo:
   - unscoped_commentary_claims
   - boundary_claims_overriding_scripture
   - boundary_claims_equaling_scripture_authority
+  - commentary_data_in_canonical_scripture_tables
+  - patristic_data_in_canonical_scripture_tables
+  - theologian_data_in_canonical_scripture_tables
+  - denomination_profile_data_in_canonical_scripture_tables
+  - theologian_or_commentary_claims_as_scripture_authority
 
 allowed_in_boundary_repo:
   - source_intake_plans
   - source_status_records
   - trust_profiles
   - scoped_boundary_claims
+  - commentary_metadata
+  - church_father_citation_metadata
+  - patristic_reception_metadata
+  - theologian_writing_source_metadata
+  - attribution_and_forgery_status
   - scoped_background_links
   - comparison_reception_refutation_relationships
   - scripture_references_without_scripture_text
@@ -71,6 +84,16 @@ data_flow_guardrails:
   commentary_may_discuss_scripture_and_boundary_literature: true
   boundary_claims_can_mutate_canonical_scripture_records: false
   boundary_material_in_default_scripture_retrieval: false
+  scripture_text_stored_here: false
+  unified_evidence_products_are_derived_artifacts: true
+  canonical_tables_may_include_boundary_data: false
+  canonical_tables_may_include_commentary_data: false
+  canonical_tables_may_include_patristic_data: false
+  canonical_tables_may_include_theologian_data: false
+  canonical_tables_may_include_denominational_profile_data: false
+  derived_database_allowed_prefixes:
+    - boundary_
+    - evidence_
   stop_if_boundary_material_required_to_modify_canonical_outputs: true
 
 boundary_governance_constraint_policy:
@@ -143,3 +166,6 @@ stop_triggers:
   - boundary_layer_treats_governance_as_obstacle
   - boundary_originated_request_targets_higher_authority_layer
   - boundary_originated_request_lacks_owner_authorization
+  - commentary_or_theologian_claim_treated_as_scripture_authority
+  - boundary_data_routed_to_canonical_scripture_table
+  - boundary_record_missing_tradition_or_profile_scope

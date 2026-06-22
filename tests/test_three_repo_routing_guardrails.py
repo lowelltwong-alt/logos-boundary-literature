@@ -35,7 +35,10 @@ def test_boundary_policy_routes_scripture_and_governance_work_away() -> None:
     assert "cross_repo_authority_policy" in data["route_to_governance_repo"]
     assert "repository_link_contracts" in data["route_to_governance_repo"]
     assert "boundary_claims_overriding_scripture" in data["forbidden_in_boundary_repo"]
+    assert "theologian_or_commentary_claims_as_scripture_authority" in data["forbidden_in_boundary_repo"]
     assert "scripture_references_without_scripture_text" in data["allowed_in_boundary_repo"]
+    assert "church_father_citation_metadata" in data["allowed_in_boundary_repo"]
+    assert "theologian_writing_source_metadata" in data["allowed_in_boundary_repo"]
     assert set(data["boundary_claims_require_scope"]) == {
         "trust_level",
         "tradition_scope",
@@ -54,6 +57,21 @@ def test_front_door_and_contract_state_stop_rule() -> None:
     assert "hierarchically under, or at minimum never above" in text
     assert "must not override, contaminate, or become equal authority" in text
     assert "stop and report" in text
+    assert "Church-father citations/patristic reception" in text
+    assert "Denominational/theological development over time" in text
+
+
+def test_unified_evidence_namespace_controls_are_boundary_scoped() -> None:
+    data = load_policy()
+    guardrails = data["data_flow_guardrails"]
+    assert guardrails["scripture_text_stored_here"] is False
+    assert guardrails["unified_evidence_products_are_derived_artifacts"] is True
+    assert guardrails["canonical_tables_may_include_boundary_data"] is False
+    assert guardrails["canonical_tables_may_include_commentary_data"] is False
+    assert guardrails["canonical_tables_may_include_patristic_data"] is False
+    assert guardrails["canonical_tables_may_include_theologian_data"] is False
+    assert guardrails["canonical_tables_may_include_denominational_profile_data"] is False
+    assert set(guardrails["derived_database_allowed_prefixes"]) == {"boundary_", "evidence_"}
 
 
 def test_no_text_corpus_was_imported() -> None:

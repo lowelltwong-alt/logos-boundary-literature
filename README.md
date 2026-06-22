@@ -1,16 +1,17 @@
 # Logos Boundary Literature
 
 `logos-boundary-literature` is a governed repository scaffold for noncanonical, boundary,
-heterodox, disputed, forged, reception-history, and supporting literature related to Scripture and
-Christian theological interpretation.
+heterodox, disputed, forged, reception-history, commentary, patristic, theologian-writing, and
+supporting literature related to Scripture and Christian theological interpretation.
 
 Presence in this repo does not imply authority.
 
 ## Purpose
 
 Canonical Scripture remains in `logos-scripture-graph`. Boundary, noncanonical, heterodox,
-disputed, forged, reception-history, and supporting literature belongs here so it can be modeled
-without contaminating Scripture records.
+disputed, forged, reception-history, commentary, patristic, church-father citation, and
+theologian-writing material belongs here so it can be modeled without contaminating Scripture
+records.
 
 This scaffold defines governance, trust hierarchy, schemas, and cross-repo contracts. It does not
 include source texts.
@@ -27,6 +28,14 @@ outputs.
 `logos-boundary-literature` owns boundary literature metadata, source status, trust profiles,
 tradition-scoped claims, commentary/reception claims, and comparison/refutation/background
 relationships. It is hierarchically under, or at minimum never above, canonical Scripture authority.
+
+Commentaries, church-father citations, patristic reception, and ancient or modern theologian
+writings route here as source and reception metadata. This repo stores Scripture references, not
+Scripture text.
+
+Future doctrine-development and denomination/profile lineage belongs in the planned
+`logos-doctrine-genealogy` repo after governance registration. This repo may hold source records
+that doctrine lineage later references, but it does not own doctrine-genealogy truth.
 
 Boundary material must not override, contaminate, or become equal authority to canonical Scripture.
 If a task appears to require boundary material to modify canonical Scripture outputs, stop and
@@ -63,6 +72,10 @@ for reception history without being canonical Scripture.
   normalized into Christian canon.
 - A text can be canonical in one tradition, noncanonical in another, and still valuable
   historically.
+- Church-father or commentary citations can help show reception history and textual continuity, but
+  they are never canonical Scripture.
+- Ancient and modern theologian writings can be source or reception evidence, but their claims
+  require trust, tradition/profile scope, provenance, and review status.
 
 ## Repository Structure
 
@@ -73,6 +86,8 @@ data/            Empty scaffold folders only; no source text yet.
 eval/            Placeholder for future validation and review artifacts.
 tests/           Placeholder for future validation tests.
 .ai/             Project status, task, and handoff scaffolding.
+AI_TABLE_OF_CONTENTS.md  AI navigation map for this repo.
+ROADMAP.md       Source-layer roadmap for patristic, commentary, theologian, and denominational reception.
 ```
 
 ## Contamination Controls
@@ -84,6 +99,9 @@ tests/           Placeholder for future validation tests.
 - Do not retrieve boundary material into canonical answers by default.
 - Do not create a claim without provenance.
 - Do not create a canon claim without tradition scope.
+- Do not place commentary, patristic, theologian, or denomination-profile data in canonical
+  Scripture tables or default Scripture retrieval.
+- Use `boundary_*` or clearly derived `evidence_*` namespaces for future unified reports.
 
 ## Contributor Review
 
@@ -110,5 +128,5 @@ and [`.ai/control/boundary_material_routing.yaml`](.ai/control/boundary_material
 ## No Text Import Yet
 
 The `data/` folders are intentionally empty except `.gitkeep`. No full source text corpus,
-copyrighted text, public-domain text, commentary text, or boundary text is imported in this
-scaffold.
+copyrighted text, public-domain text, commentary text, theologian text, patristic text, or boundary
+text is imported in this scaffold.

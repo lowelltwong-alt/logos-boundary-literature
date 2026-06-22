@@ -3,8 +3,8 @@
 This repository is `logos-boundary-literature`.
 
 It is a governed scaffold for noncanonical, boundary, heterodox, disputed, forged,
-reception-history, and supporting literature related to Scripture and Christian theological
-interpretation.
+reception-history, commentary, patristic, theologian-writing, and supporting literature related to
+Scripture and Christian theological interpretation.
 
 ## What This Repo Is
 
@@ -14,6 +14,8 @@ interpretation.
 - A companion repo that may reference Scripture by stable references.
 - A contamination-control layer for background, reception, comparison, refutation, and
   source-tradition work.
+- The source/reception home for commentary metadata, church-father citations, patristic reception,
+  and ancient or modern theologian-writing records.
 
 ## What This Repo Is Not
 
@@ -22,6 +24,8 @@ interpretation.
 - It is not a place to import full source-text corpora in this scaffold increment.
 - It is not a place to declare theological conclusions as settled universal truth.
 - It is not a place to flatten all noncanonical works into one trust category.
+- It is not `logos-doctrine-genealogy`; doctrine development, denominational lineage, and
+  theologian-to-theologian influence belong in that planned repo after governance registration.
 
 ## Relation To `logos-scripture-graph`
 
@@ -41,8 +45,8 @@ authority contracts, update rules, and validation patterns.
 `logos-scripture-graph` owns canonical Scripture truth for the 66-book Bible graph.
 
 `logos-boundary-literature` supports canonical Scripture work with noncanonical,
-deuterocanonical/apocrypha, boundary, heterodox, disputed, forged, commentary/reception, historical
-background, and supporting literature.
+deuterocanonical/apocrypha, boundary, heterodox, disputed, forged, patristic, commentary/reception,
+theologian-writing, historical background, and supporting literature.
 
 This repo is hierarchically under, or at minimum never above, canonical Scripture authority. It may
 provide background, comparison, reception history, refutation targets, commentary/reception claims,
@@ -78,6 +82,9 @@ Owner-reserved authorization required: only Lowell Wong, as project owner, may a
 | Apocrypha/deuterocanon/boundary literature | `logos-boundary-literature` |
 | Gnostic/fake/forged texts | `logos-boundary-literature` |
 | Commentary/reception claims | `logos-boundary-literature` |
+| Church-father citations/patristic reception | `logos-boundary-literature` |
+| Ancient or modern theologian source metadata | `logos-boundary-literature` |
+| Denominational/theological development over time | planned `logos-doctrine-genealogy` |
 | Cross-repo policy/authority/update rules | `logos-governance-architecture` |
 | Canonical corpus correction | `logos-scripture-graph` |
 | Boundary text source intake | `logos-boundary-literature` |
@@ -89,6 +96,7 @@ Owner-reserved authorization required: only Lowell Wong, as project owner, may a
 - Do not paste source texts.
 - Do not download sources.
 - Do not create canonical Scripture records.
+- Do not copy Scripture text; store Scripture references only.
 - Do not treat boundary literature as Word of God.
 - Do not classify all noncanonical literature as equally false.
 - Do not normalize fake gospels, high-trust background, deuterocanon, and patristic reception into
@@ -97,6 +105,9 @@ Owner-reserved authorization required: only Lowell Wong, as project owner, may a
 - Do not overwrite tradition-specific canon status.
 - Do not create unscoped theological claims.
 - Do not let boundary claims override, contaminate, or equal canonical Scripture authority.
+- Do not place commentary, patristic, theologian, or denomination-profile data in canonical
+  Scripture tables, canonical views, or default Scripture retrieval.
+- Do not treat theologian or commentary claims as Scripture authority.
 - Do not treat higher-authority governance as an obstacle.
 - Do not automate, route, or bundle boundary-originated requests to change higher-authority
   governance, canonical Scripture authority, repository-link contracts, canonical scope, trust
@@ -132,10 +143,11 @@ Machine-readable contributor review policy:
 ## Next Tasks
 
 1. Review governance docs.
-2. Add lightweight validation for schema files and empty data directories.
-3. Add dummy records only after review, using invented placeholder data rather than real source
+2. Read `AI_TABLE_OF_CONTENTS.md` and `ROADMAP.md`.
+3. Add lightweight validation for schema files and empty data directories.
+4. Add dummy records only after review, using invented placeholder data rather than real source
    text.
-4. Design source-intake review workflow before any real corpus or source metadata import.
+5. Design source-intake review workflow before any real corpus or source metadata import.
 
 ## AI Behavior Here
 
