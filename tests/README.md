@@ -1,19 +1,23 @@
 # Tests
 
-No executable test suite exists yet.
-
-Current scaffold validation should use:
+Current scaffold validation uses pytest plus JSON Schema parse checks:
 
 ```bash
 python -c "import json, pathlib; [json.load(open(p, encoding='utf-8')) for p in pathlib.Path('schemas').glob('*.schema.json')]"
 python -m pytest -q
 ```
 
-Future validation should check:
+Current executable checks cover:
 
-- schema parse and sample validation;
 - SQLite reliability-evidence schema execution;
 - namespace separation for `boundary_*` and `evidence_*` tables;
+- invented reliability-evidence fixture loading;
+- text-storage flags staying disabled;
+- candidate claims staying unpromoted and non-authoritative.
+
+Future validation should check:
+
+- broader schema parse and sample validation;
 - data folders contain no source texts before intake approval;
 - every source record has source status;
 - every claim has provenance;
