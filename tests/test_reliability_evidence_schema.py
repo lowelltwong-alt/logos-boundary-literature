@@ -8,6 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SCHEMA = ROOT / "schemas" / "reliability_evidence.sqlite.schema.sql"
 PLAN = ROOT / "schemas" / "reliability_evidence_database_plan.md"
 SOURCE_SPINE = ROOT / "schemas" / "reliability_evidence_source_spine.md"
+INTAKE_QUEUE = ROOT / "schemas" / "reliability_evidence_intake_queue.md"
 FIXTURE = ROOT / "tests" / "fixtures" / "reliability_evidence_example_seed.sql"
 
 
@@ -85,6 +86,7 @@ def test_reliability_schema_does_not_store_source_text_or_scripture_text() -> No
 def test_reliability_schema_requires_anti_guessing_fields() -> None:
     conn = schema_connection()
     for table in [
+        "evidence_research_intake_queue",
         "evidence_manuscript_witness_ref",
         "evidence_textual_question_ref",
         "evidence_claim_candidate",
@@ -106,6 +108,47 @@ def test_reliability_schema_requires_anti_guessing_fields() -> None:
         "has_review_status",
         "may_promote",
     }.issubset(audit_columns)
+
+
+def test_reliability_schema_has_source_intake_queue_guardrails() -> None:
+    conn = schema_connection()
+    columns = column_names(conn, "evidence_research_intake_queue")
+    assert {
+        "evidence_lane",
+        "source_locator",
+        "proposed_target_repo",
+        "proposed_record_namespace",
+        "intake_claim_status",
+        "confirmed_fact_summary",
+        "candidate_claim_summary",
+        "stores_source_text",
+        "stores_scripture_text",
+        "stores_transcription_text",
+        "requires_license_review",
+        "requires_expert_review",
+        "source_basis",
+        "method_note",
+        "confidence_level",
+        "provenance_note",
+        "review_status",
+    }.issubset(columns)
+
+    sql = load_schema()
+    for lane in [
+        "dead_sea_scrolls_ot_witness",
+        "nt_papyri_codices",
+        "textual_variants_copy_abundance",
+        "early_creed_oral_tradition",
+        "patristic_reception_reconstruction",
+        "discovery_timeline",
+        "method_bibliography",
+    ]:
+        assert lane in sql
+
+    assert "'scripture_*'" in sql
+    assert "'boundary_*'" in sql
+    assert "'evidence_*'" in sql
+    assert "'canonical_*'" not in sql
 
 
 def test_reliability_plan_declares_repo_placement_and_source_spine() -> None:
@@ -130,6 +173,24 @@ def test_reliability_source_spine_separates_confirmed_and_candidate_claims() -> 
     assert "BiblIndex" in text
     assert "Patristic Citation Caution" in text
     assert "No source-spine entry may become a reviewed row merely because a model found it" in text
+
+
+def test_reliability_intake_queue_plan_declares_lanes_and_stop_rules() -> None:
+    text = INTAKE_QUEUE.read_text(encoding="utf-8")
+    assert "pre-evidence holding area" in text
+    assert "`dead_sea_scrolls_ot_witness`" in text
+    assert "`nt_papyri_codices`" in text
+    assert "`textual_variants_copy_abundance`" in text
+    assert "`early_creed_oral_tradition`" in text
+    assert "`patristic_reception_reconstruction`" in text
+    assert "`discovery_timeline`" in text
+    assert "`method_bibliography`" in text
+    assert "Confirmed Metadata Vs Candidate Claims" in text
+    assert "No \"within months\" dating claim may be promoted" in text
+    assert "store Scripture text, manuscript transcription text" in text
+    assert "https://www.deadseascrolls.org.il/" in text
+    assert "https://www.uni-muenster.de/INTF/en/" in text
+    assert "https://manuscripts.csntm.org/manuscript/View/GA_P52" in text
 
 
 def test_reliability_fixture_loads_as_example_only_metadata() -> None:
@@ -164,6 +225,14 @@ def test_reliability_fixture_keeps_text_storage_disabled() -> None:
     assert conn.execute(
         "SELECT may_store_full_text, may_store_scripture_text FROM boundary_source_access"
     ).fetchall() == [(0, 0)]
+    assert set(
+        conn.execute(
+            """
+            SELECT stores_source_text, stores_scripture_text, stores_transcription_text
+            FROM evidence_research_intake_queue
+            """
+        ).fetchall()
+    ) == {(0, 0, 0)}
     assert conn.execute(
         "SELECT citation_text_stored FROM boundary_patristic_citation_candidate"
     ).fetchall() == [(0,)]
@@ -193,3 +262,34 @@ def test_reliability_fixture_claims_cannot_promote_or_transfer_authority() -> No
     assert conn.execute(
         "SELECT may_promote FROM evidence_anti_guessing_audit"
     ).fetchall() == [(0,)]
+
+
+def test_reliability_fixture_intake_queue_covers_all_lanes_without_promotion() -> None:
+    conn = fixture_connection()
+    lanes = {
+        row[0]
+        for row in conn.execute(
+            "SELECT evidence_lane FROM evidence_research_intake_queue"
+        ).fetchall()
+    }
+    assert lanes == {
+        "dead_sea_scrolls_ot_witness",
+        "nt_papyri_codices",
+        "textual_variants_copy_abundance",
+        "early_creed_oral_tradition",
+        "patristic_reception_reconstruction",
+        "discovery_timeline",
+        "method_bibliography",
+    }
+
+    rows = conn.execute(
+        """
+        SELECT proposed_target_repo, proposed_record_namespace, intake_claim_status, review_status
+        FROM evidence_research_intake_queue
+        """
+    ).fetchall()
+    assert all(row[3] == "unreviewed" for row in rows)
+    assert any(row[0] == "logos-scripture-graph" and row[1] == "scripture_*" for row in rows)
+    assert any(row[1] == "boundary_*" for row in rows)
+    assert any(row[2] == "candidate_claim" for row in rows)
+    assert any(row[2] == "mixed_requires_split" for row in rows)
