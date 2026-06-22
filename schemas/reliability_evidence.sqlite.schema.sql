@@ -387,6 +387,78 @@ CREATE TABLE evidence_textual_question_ref (
   review_status TEXT NOT NULL DEFAULT 'draft'
 );
 
+CREATE TABLE evidence_early_tradition_question (
+  evidence_early_tradition_id TEXT PRIMARY KEY,
+  evidence_project_id TEXT NOT NULL REFERENCES evidence_project(evidence_project_id),
+  evidence_scripture_ref_id TEXT NOT NULL REFERENCES evidence_scripture_reference(evidence_scripture_ref_id),
+  evidence_question_id TEXT REFERENCES evidence_textual_question_ref(evidence_question_id),
+  tradition_reference_label TEXT NOT NULL,
+  tradition_type TEXT NOT NULL CHECK (
+    tradition_type IN (
+      'pre_pauline_creed_candidate',
+      'formulaic_tradition_candidate',
+      'oral_tradition_question',
+      'early_devotion_pattern',
+      'method_only'
+    )
+  ),
+  tradition_evidence_scope TEXT NOT NULL CHECK (
+    tradition_evidence_scope IN (
+      'passage_reference',
+      'pauline_letter_context',
+      'early_christian_origin_question',
+      'resurrection_claim_context',
+      'method_only'
+    )
+  ),
+  dating_claim_status TEXT NOT NULL DEFAULT 'candidate' CHECK (
+    dating_claim_status IN ('candidate', 'proposed', 'reviewed', 'rejected')
+  ),
+  earliest_possible_date_start INTEGER,
+  earliest_possible_date_end INTEGER,
+  latest_possible_date_start INTEGER,
+  latest_possible_date_end INTEGER,
+  date_precision TEXT NOT NULL DEFAULT 'unknown' CHECK (
+    date_precision IN (
+      'exact_year',
+      'year_range',
+      'relative_sequence',
+      'unknown',
+      'not_applicable'
+    )
+  ),
+  date_basis TEXT NOT NULL,
+  linguistic_signal_status TEXT NOT NULL DEFAULT 'not_assessed' CHECK (
+    linguistic_signal_status IN (
+      'not_assessed',
+      'candidate_semitism',
+      'candidate_formulaic_structure',
+      'candidate_tradition_marker',
+      'mixed_requires_review',
+      'not_applicable'
+    )
+  ),
+  source_language_scope TEXT NOT NULL DEFAULT 'unknown',
+  confirmed_fact_summary TEXT NOT NULL DEFAULT 'none_reviewed',
+  candidate_claim_summary TEXT NOT NULL DEFAULT 'none',
+  dissent_summary TEXT NOT NULL DEFAULT 'not_reviewed',
+  stores_tradition_wording INTEGER NOT NULL DEFAULT 0 CHECK (stores_tradition_wording = 0),
+  stores_scripture_text INTEGER NOT NULL DEFAULT 0 CHECK (stores_scripture_text = 0),
+  requires_source_language_review INTEGER NOT NULL DEFAULT 1 CHECK (requires_source_language_review IN (0, 1)),
+  requires_historical_context_review INTEGER NOT NULL DEFAULT 1 CHECK (requires_historical_context_review IN (0, 1)),
+  requires_dating_review INTEGER NOT NULL DEFAULT 1 CHECK (requires_dating_review IN (0, 1)),
+  requires_dissent_review INTEGER NOT NULL DEFAULT 1 CHECK (requires_dissent_review IN (0, 1)),
+  apologetic_force_claimed INTEGER NOT NULL DEFAULT 0 CHECK (apologetic_force_claimed = 0),
+  source_basis TEXT NOT NULL,
+  method_note TEXT NOT NULL,
+  confidence_level TEXT NOT NULL DEFAULT 'unknown',
+  tradition_scope TEXT NOT NULL DEFAULT 'not_applicable',
+  profile_scope TEXT NOT NULL DEFAULT 'not_applicable',
+  provenance_note TEXT NOT NULL,
+  review_status TEXT NOT NULL DEFAULT 'unreviewed',
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
 CREATE TABLE evidence_discovery_event (
   evidence_discovery_event_id TEXT PRIMARY KEY,
   evidence_witness_ref_id TEXT REFERENCES evidence_manuscript_witness_ref(evidence_witness_ref_id),

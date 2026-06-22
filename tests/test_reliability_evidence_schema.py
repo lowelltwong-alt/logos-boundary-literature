@@ -14,6 +14,7 @@ TIMELINE_CHECKPOINTS = ROOT / "schemas" / "reliability_evidence_timeline_checkpo
 PATRISTIC_RECONSTRUCTION = (
     ROOT / "schemas" / "reliability_evidence_patristic_reconstruction.md"
 )
+EARLY_TRADITIONS = ROOT / "schemas" / "reliability_evidence_early_traditions.md"
 FIXTURE = ROOT / "tests" / "fixtures" / "reliability_evidence_example_seed.sql"
 
 
@@ -96,6 +97,7 @@ def test_reliability_schema_requires_anti_guessing_fields() -> None:
         "evidence_research_intake_queue",
         "evidence_timeline_checkpoint",
         "boundary_patristic_reconstruction_question",
+        "evidence_early_tradition_question",
         "evidence_manuscript_witness_ref",
         "evidence_textual_question_ref",
         "evidence_claim_candidate",
@@ -316,6 +318,52 @@ def test_reliability_schema_has_patristic_reconstruction_guardrails() -> None:
     assert "reconstructs_scripture_authority INTEGER NOT NULL DEFAULT 0" in sql
 
 
+def test_reliability_schema_has_early_tradition_guardrails() -> None:
+    conn = schema_connection()
+    columns = column_names(conn, "evidence_early_tradition_question")
+    assert {
+        "tradition_reference_label",
+        "tradition_type",
+        "tradition_evidence_scope",
+        "dating_claim_status",
+        "earliest_possible_date_start",
+        "earliest_possible_date_end",
+        "latest_possible_date_start",
+        "latest_possible_date_end",
+        "date_precision",
+        "date_basis",
+        "linguistic_signal_status",
+        "source_language_scope",
+        "confirmed_fact_summary",
+        "candidate_claim_summary",
+        "dissent_summary",
+        "stores_tradition_wording",
+        "stores_scripture_text",
+        "requires_source_language_review",
+        "requires_historical_context_review",
+        "requires_dating_review",
+        "requires_dissent_review",
+        "apologetic_force_claimed",
+        "source_basis",
+        "method_note",
+        "confidence_level",
+        "provenance_note",
+        "review_status",
+    }.issubset(columns)
+
+    sql = load_schema()
+    for tradition_type in [
+        "pre_pauline_creed_candidate",
+        "formulaic_tradition_candidate",
+        "oral_tradition_question",
+        "early_devotion_pattern",
+        "method_only",
+    ]:
+        assert tradition_type in sql
+    assert "stores_tradition_wording INTEGER NOT NULL DEFAULT 0 CHECK (stores_tradition_wording = 0)" in sql
+    assert "apologetic_force_claimed INTEGER NOT NULL DEFAULT 0 CHECK (apologetic_force_claimed = 0)" in sql
+
+
 def test_reliability_plan_declares_repo_placement_and_source_spine() -> None:
     text = PLAN.read_text(encoding="utf-8")
     assert "This scaffold starts in `logos-boundary-literature`" in text
@@ -403,6 +451,19 @@ def test_reliability_patristic_reconstruction_plan_declares_source_limits() -> N
     assert "https://ntvmr.uni-muenster.de/intfblog/-/blogs/patristic-citations-in-new-testament-textual-criticism" in text
 
 
+def test_reliability_early_traditions_plan_declares_date_limits() -> None:
+    text = EARLY_TRADITIONS.read_text(encoding="utf-8")
+    assert "This scaffold models questions about early creeds" in text
+    assert "It does not assert that a creed dates within months" in text
+    assert "`pre_pauline_creed_candidate`" in text
+    assert "`oral_tradition_question`" in text
+    assert "`early_devotion_pattern`" in text
+    assert "`method_only`" in text
+    assert "pre-Pauline label as equivalent to immediate post-resurrection origin" in text
+    assert "https://ntwrightpage.com/2016/04/05/early-traditions-and-the-origins-of-christianity/" in text
+    assert "https://larryhurtado.wordpress.com/2019/08/23/the-origins-of-devotion-to-jesus-in-its-ancient-context/" in text
+
+
 def test_reliability_fixture_loads_as_example_only_metadata() -> None:
     conn = fixture_connection()
     tables = table_names(conn)
@@ -471,6 +532,14 @@ def test_reliability_fixture_keeps_text_storage_disabled() -> None:
     assert conn.execute(
         "SELECT no_reading_text_stored FROM evidence_textual_question_ref"
     ).fetchall() == [(1,)]
+    assert set(
+        conn.execute(
+            """
+            SELECT stores_tradition_wording, stores_scripture_text
+            FROM evidence_early_tradition_question
+            """
+        ).fetchall()
+    ) == {(0, 0)}
 
 
 def test_reliability_fixture_claims_cannot_promote_or_transfer_authority() -> None:
@@ -511,6 +580,14 @@ def test_reliability_fixture_claims_cannot_promote_or_transfer_authority() -> No
             """
             SELECT reconstruction_claim_status, reconstructs_scripture_authority, review_status
             FROM boundary_patristic_reconstruction_question
+            """
+        ).fetchall()
+    ) == {("candidate", 0, "unreviewed")}
+    assert set(
+        conn.execute(
+            """
+            SELECT dating_claim_status, apologetic_force_claimed, review_status
+            FROM evidence_early_tradition_question
             """
         ).fetchall()
     ) == {("candidate", 0, "unreviewed")}
@@ -667,3 +744,34 @@ def test_reliability_fixture_patristic_reconstruction_blocks_broad_claims() -> N
     assert all(row[1:5] == (1, 1, 1, 1) for row in rows)
     assert all(row[5] == "unknown" for row in rows)
     assert any(row[0] == "unknown_requires_review" for row in rows)
+
+
+def test_reliability_fixture_early_traditions_block_overconfident_dates() -> None:
+    conn = fixture_connection()
+    tradition_types = {
+        row[0]
+        for row in conn.execute(
+            "SELECT tradition_type FROM evidence_early_tradition_question"
+        ).fetchall()
+    }
+    assert tradition_types == {
+        "pre_pauline_creed_candidate",
+        "oral_tradition_question",
+        "method_only",
+    }
+
+    rows = conn.execute(
+        """
+        SELECT
+          date_precision,
+          requires_source_language_review,
+          requires_historical_context_review,
+          requires_dating_review,
+          requires_dissent_review,
+          confidence_level
+        FROM evidence_early_tradition_question
+        """
+    ).fetchall()
+    assert all(row[1:5] == (1, 1, 1, 1) for row in rows)
+    assert all(row[5] == "unknown" for row in rows)
+    assert not any(row[0] in ("exact_year", "year_range") for row in rows)
