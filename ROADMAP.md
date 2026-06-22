@@ -19,6 +19,10 @@ scaffold.
 - Store Scripture references only, not Scripture text.
 - Track whether a source is public domain, copyrighted, licensed, disputed, or
   unavailable.
+- Develop the reliability/provenance evidence database scaffold as metadata
+  planning only. It may reference future `scripture_*` records from
+  `logos-scripture-graph`, but this repo owns only `boundary_*` and `evidence_*`
+  tables.
 
 ## Phase 3: Patristic And Early Reception
 
@@ -43,6 +47,8 @@ scaffold.
 - Use `boundary_*` and `evidence_*` namespaces for boundary-derived data.
 - Never create canonical Scripture tables or views from commentary, patristic,
   theologian, or denomination-profile data.
+- Add discovery-timeline and reliability-report views only after the source
+  records, confidence fields, and review gates exist.
 
 ## Phase 6: Doctrine Genealogy Handoff
 
@@ -64,3 +70,6 @@ Stop and report if:
 - denomination/profile claims are presented as universal truth without scope;
 - a unified report hides whether data came from Scripture, boundary literature,
   or doctrine lineage.
+- a reliability/provenance record stores Scripture text, manuscript
+  transcription text, commentary text, patristic text, or theologian text before
+  source-intake review.
