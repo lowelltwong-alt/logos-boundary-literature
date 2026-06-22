@@ -7,6 +7,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA = ROOT / "schemas" / "reliability_evidence.sqlite.schema.sql"
 PLAN = ROOT / "schemas" / "reliability_evidence_database_plan.md"
+SOURCE_SPINE = ROOT / "schemas" / "reliability_evidence_source_spine.md"
 
 
 def load_schema() -> str:
@@ -104,3 +105,16 @@ def test_reliability_plan_declares_repo_placement_and_source_spine() -> None:
     assert "Initial Source Spine" in text
     assert "New Testament Virtual Manuscript Room" in text
     assert "BiblIndex" in text
+
+
+def test_reliability_source_spine_separates_confirmed_and_candidate_claims() -> None:
+    text = SOURCE_SPINE.read_text(encoding="utf-8")
+    assert "Confirmed From Source" in text
+    assert "Candidate Claims Not Yet Asserted" in text
+    assert "Leon Levy Dead Sea Scrolls Digital Library" in text
+    assert "New Testament Virtual Manuscript Room" in text
+    assert "Codex Sinaiticus" in text
+    assert "Manchester Digital Collections: Greek P 457" in text
+    assert "BiblIndex" in text
+    assert "Patristic Citation Caution" in text
+    assert "No source-spine entry may become a reviewed row merely because a model found it" in text

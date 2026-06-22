@@ -25,6 +25,7 @@ This file is the navigation map for agents and maintainers entering
 
 - `schemas/README.md` - schema index and source-ingestion warning.
 - `schemas/reliability_evidence_database_plan.md` - Bible reliability/provenance evidence database plan.
+- `schemas/reliability_evidence_source_spine.md` - starting source spine with confirmed metadata and candidate-claim separation.
 - `schemas/reliability_evidence.sqlite.schema.sql` - SQLite scaffold for boundary and derived evidence metadata.
 
 ## Routing Summary
