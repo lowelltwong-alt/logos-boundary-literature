@@ -21,6 +21,12 @@ include source texts.
 `logos-governance-architecture` owns cross-repo policy, authority contracts, update rules, and
 validation patterns.
 
+This repo enforces a local mirror of the upstream governance dependency map at
+`.ai/control/governance_dependency_map_mirror.yaml`. The upstream governance dependency map remains
+the source of truth at
+`logos-governance-architecture/governance/GOVERNANCE_DEPENDENCY_MAP.yaml`; this repo only mirrors
+and validates the child-repo obligations.
+
 `logos-scripture-graph` owns canonical 66-book Scripture truth, canonical passage records,
 canonical chunking, canonical Scripture gold/evaluator surfaces, and canonical Scripture graph
 outputs.

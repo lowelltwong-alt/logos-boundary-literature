@@ -42,6 +42,23 @@ tradition-scoped evidence unless a separate human review explicitly authorizes a
 `logos-governance-architecture` is the higher governance/control-plane repo for cross-repo policy,
 authority contracts, update rules, and validation patterns.
 
+## Governance Dependency-Map Mirror
+
+This child repo mirrors the upstream governance dependency-map update gate. The upstream source of
+truth is `logos-governance-architecture/governance/GOVERNANCE_DEPENDENCY_MAP.yaml`, artifact
+`GD-014`.
+
+Local mirror control:
+`.ai/control/governance_dependency_map_mirror.yaml`.
+
+Local validator:
+`scripts/validate_governance_dependency_map_mirror.py`.
+
+If a governance-facing file changes here, agents must check whether the upstream governance
+dependency map and this local mirror surface also need updates. This repo must not override,
+weaken, or reinterpret the upstream governance dependency map. If the upstream map conflicts with a
+boundary-local request, stop and report.
+
 `logos-scripture-graph` owns canonical Scripture truth for the 66-book Bible graph.
 
 `logos-boundary-literature` supports canonical Scripture work with noncanonical,
