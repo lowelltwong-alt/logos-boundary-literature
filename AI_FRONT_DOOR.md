@@ -54,6 +54,9 @@ Local mirror control:
 Local validator:
 `scripts/validate_governance_dependency_map_mirror.py`.
 
+Boundary schema and trust-tier validator:
+`scripts/validate_boundary_schema_controls.py`.
+
 If a governance-facing file changes here, agents must check whether the upstream governance
 dependency map and this local mirror surface also need updates. This repo must not override,
 weaken, or reinterpret the upstream governance dependency map. If the upstream map conflicts with a
@@ -69,6 +72,9 @@ This repo is hierarchically under, or at minimum never above, canonical Scriptur
 provide background, comparison, reception history, refutation targets, commentary/reception claims,
 and tradition-scoped claims. It must not override, contaminate, or become equal authority to
 canonical Scripture.
+
+Trust tiers are contamination and retrieval controls, not automatic doctrine authority rungs. See
+[`governance/AUTHORITY_LADDER_CROSSWALK.md`](governance/AUTHORITY_LADDER_CROSSWALK.md).
 
 If a task appears to require boundary material to modify canonical Scripture outputs, stop and
 report.

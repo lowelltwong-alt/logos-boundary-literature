@@ -4,6 +4,7 @@ Current scaffold validation uses pytest plus JSON Schema parse checks:
 
 ```bash
 python -c "import json, pathlib; [json.load(open(p, encoding='utf-8')) for p in pathlib.Path('schemas').glob('*.schema.json')]"
+python scripts/validate_boundary_schema_controls.py
 python -m pytest -q
 ```
 
@@ -22,6 +23,9 @@ Current executable checks cover:
 - invented reliability-evidence fixture loading;
 - text-storage flags staying disabled;
 - candidate claims staying unpromoted and non-authoritative.
+- JSON Schema conformance for the four boundary JSON schemas;
+- closed trust-tier vocabulary across schema and documentation surfaces;
+- warn-level contamination linting for suspected verse-length quoted text in data files.
 
 Future validation should check:
 

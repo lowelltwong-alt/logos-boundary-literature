@@ -18,6 +18,7 @@ This file is the navigation map for agents and maintainers entering
 - `governance/CROSS_REPO_CONTRACT_WITH_LOGOS_SCRIPTURE_GRAPH.md` - contract with Scripture Graph.
 - `governance/CONTAMINATION_CONTROLS.md` - rules that keep boundary material out of canonical Scripture authority.
 - `governance/TRUST_HIERARCHY.md` - trust levels for boundary material.
+- `governance/AUTHORITY_LADDER_CROSSWALK.md` - trust-tier to S0-S7 authority-ladder crosswalk; keeps retrieval/contamination utility separate from doctrine authority.
 - `governance/SOURCE_INTAKE_POLICY.md` - source-intake controls before any real corpus work.
 - `governance/ATTRIBUTION_AND_FORGERY_POLICY.md` - attribution, disputed status, and forgery controls.
 - `governance/CANON_AND_AUTHORITY_POLICY.md` - canon and authority distinctions.
@@ -34,6 +35,7 @@ This file is the navigation map for agents and maintainers entering
 - `schemas/reliability_evidence_patristic_reconstruction.md` - patristic reconstruction question scaffold with citation-mode guardrails.
 - `schemas/reliability_evidence_early_traditions.md` - early creed, oral tradition, and early devotion question scaffold.
 - `schemas/reliability_evidence.sqlite.schema.sql` - SQLite scaffold for boundary and derived evidence metadata.
+- `scripts/validate_boundary_schema_controls.py` - JSON Schema conformance, closed trust-tier vocabulary, and warn-level source-text contamination lint.
 
 ## Routing Summary
 
