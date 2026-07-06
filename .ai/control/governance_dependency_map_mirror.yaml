@@ -1,7 +1,7 @@
 object_type: governance_dependency_map_mirror
 trust_zone: canonical
 lifecycle_status: active
-provenance_note: "Created 2026-06-29 to mirror the upstream Logos governance dependency-map update gate inside logos-boundary-literature."
+provenance_note: "Created 2026-06-29 to mirror the upstream Logos governance dependency-map update gate inside logos-boundary-literature. Updated 2026-07-06 for Fable PR-6 boundary schema-control and authority-crosswalk surfaces."
 reason_for_inclusion: "Force boundary-local governance changes to check the upstream governance dependency map and local mirror surfaces instead of relying on chat memory."
 schema_version: governance_dependency_map_mirror.v1
 mirror_id: logos_boundary_literature_governance_dependency_map_mirror
@@ -15,6 +15,8 @@ upstream_dependency_map:
 local_enforcement:
   validator: scripts/validate_governance_dependency_map_mirror.py
   test: tests/test_governance_dependency_map_mirror.py
+  boundary_schema_controls_validator: scripts/validate_boundary_schema_controls.py
+  boundary_schema_controls_test: tests/test_boundary_schema_controls.py
   ci_workflow: .github/workflows/validate.yml
   front_door: AI_FRONT_DOOR.md
   table_of_contents: AI_TABLE_OF_CONTENTS.md
@@ -29,12 +31,17 @@ watched_local_governance_surfaces:
   - AI_TABLE_OF_CONTENTS.md
   - README.md
   - governance/
+  - governance/AUTHORITY_LADDER_CROSSWALK.md
   - .ai/control/boundary_material_routing.yaml
   - .ai/control/governance_dependency_map_mirror.yaml
   - scripts/validate_governance_dependency_map_mirror.py
+  - scripts/validate_boundary_schema_controls.py
   - tests/test_governance_dependency_map_mirror.py
+  - tests/test_boundary_schema_controls.py
 required_behavior:
   - check_upstream_governance_dependency_map_when_governance_files_change
   - update_local_mirror_surfaces_when_upstream_governance_affects_boundary
   - keep_boundary_governance_under_upstream_governance_authority
   - fail_closed_when_dependency_map_mirror_is_missing_or_weakened
+  - validate_boundary_schema_conformance_and_trust_tier_vocabulary
+  - warn_on_suspected_source_text_or_scripture_text_in_data_files

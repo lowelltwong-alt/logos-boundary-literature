@@ -35,10 +35,13 @@ REQUIRED_WATCHED = {
     "AI_TABLE_OF_CONTENTS.md",
     "README.md",
     "governance/",
+    "governance/AUTHORITY_LADDER_CROSSWALK.md",
     ".ai/control/boundary_material_routing.yaml",
     ".ai/control/governance_dependency_map_mirror.yaml",
     "scripts/validate_governance_dependency_map_mirror.py",
+    "scripts/validate_boundary_schema_controls.py",
     "tests/test_governance_dependency_map_mirror.py",
+    "tests/test_boundary_schema_controls.py",
 }
 
 REQUIRED_SURFACE_PHRASES = {

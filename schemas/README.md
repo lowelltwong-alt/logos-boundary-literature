@@ -24,3 +24,9 @@ They do not authorize source ingestion and do not define canonical Scripture rec
   formulaic tradition, oral-tradition, and early-devotion review.
 - `reliability_evidence.sqlite.schema.sql`: SQLite scaffold for boundary-owned and
   derived evidence tables. It does not define canonical Scripture tables or store source text.
+
+Schema controls are validated by `scripts/validate_boundary_schema_controls.py`. That validator
+checks the four JSON Schemas as Draft 2020-12 schemas, keeps the trust-level enum closed across
+`work.schema.json` and `trust_profile.schema.json`, validates future matching JSON records under
+`data/`, and emits warn-level contamination findings for suspected verse-length quoted strings in
+data files.

@@ -68,6 +68,10 @@ may authorize a boundary-originated request to change those higher-authority sur
 A boundary source can be useful, historically important, high-trust for background, or important
 for reception history without being canonical Scripture.
 
+Trust tiers control contamination and retrieval posture. They do not automatically become S0-S7
+doctrine authority rungs; see
+[`governance/AUTHORITY_LADDER_CROSSWALK.md`](governance/AUTHORITY_LADDER_CROSSWALK.md).
+
 ## Required Examples
 
 - 1 Enoch may be high-value background, especially for Second Temple context and Jude reception, but
@@ -91,6 +95,7 @@ schemas/         Proposed JSON Schemas for metadata and scoped claims.
 data/            Empty scaffold folders only; no source text yet.
 eval/            Placeholder for future validation and review artifacts.
 tests/           Placeholder for future validation tests.
+scripts/         Boundary-local validators for schema controls and governance mirror checks.
 .ai/             Project status, task, and handoff scaffolding.
 AI_TABLE_OF_CONTENTS.md  AI navigation map for this repo.
 ROADMAP.md       Source-layer roadmap for patristic, commentary, theologian, and denominational reception.
@@ -142,3 +147,6 @@ and [`.ai/control/boundary_material_routing.yaml`](.ai/control/boundary_material
 The `data/` folders are intentionally empty except `.gitkeep`. No full source text corpus,
 copyrighted text, public-domain text, commentary text, theologian text, patristic text, or boundary
 text is imported in this scaffold.
+
+`scripts/validate_boundary_schema_controls.py` validates the four JSON Schemas, locks the trust-tier
+vocabulary, and emits warn-level findings for suspected verse-length quoted strings in data files.

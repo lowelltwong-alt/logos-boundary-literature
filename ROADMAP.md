@@ -10,6 +10,10 @@ scaffold.
   `.ai/control/boundary_material_routing.yaml` aligned.
 - Maintain contamination controls that prevent boundary material from becoming
   canonical Scripture authority.
+- Maintain `governance/AUTHORITY_LADDER_CROSSWALK.md` so boundary trust tiers
+  remain separate from S0-S7 doctrine authority rungs.
+- Run `scripts/validate_boundary_schema_controls.py` when schema, trust-tier,
+  data, or contamination-control surfaces change.
 - Keep data folders empty until source-intake review permits scoped records.
 
 ## Phase 2: Source Metadata Before Text

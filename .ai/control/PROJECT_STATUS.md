@@ -1,6 +1,6 @@
 # Project Status
 
-Status: T004 boundary governance stop rules complete.
+Status: T005 boundary schema controls and authority crosswalk proposed.
 
 This repository is `logos-boundary-literature`, a governed boundary/noncanonical/reception
 literature scaffold. It is not canonical Scripture and contains no source text corpus.
@@ -36,9 +36,18 @@ literature scaffold. It is not canonical Scripture and contains no source text c
     higher-authority surfaces;
   - contributor consensus, contributor volume, automated recommendation, agent routing, and
     boundary-layer operational need are not sufficient authority.
+- Boundary schema controls proposed:
+  - `scripts/validate_boundary_schema_controls.py` checks the four JSON Schemas as Draft 2020-12
+    schemas;
+  - trust-tier vocabulary is locked across schema and documentation surfaces;
+  - contamination lint emits warn-level findings for suspected verse-length quoted strings in data
+    files;
+  - `governance/AUTHORITY_LADDER_CROSSWALK.md` keeps boundary trust tiers separate from S0-S7
+    doctrine authority rungs.
 
 ## Next Recommended Task
 
-Review source intake policy and add validation before any dummy records. Real source text import is
-not allowed yet. Any boundary-originated request that targets higher-authority governance or
-canonical Scripture layers must stop and be reviewed in the higher-authority repository.
+After T005 lands, review source intake policy and add validation before any dummy records. Real
+source text import is not allowed yet. Any boundary-originated request that targets
+higher-authority governance or canonical Scripture layers must stop and be reviewed in the
+higher-authority repository.
