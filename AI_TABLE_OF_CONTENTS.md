@@ -14,6 +14,7 @@ This file is the navigation map for agents and maintainers entering
 
 - `.ai/control/governance_dependency_map_mirror.yaml` - local mirror of the upstream `logos-governance-architecture/governance/GOVERNANCE_DEPENDENCY_MAP.yaml` GD-014 governance-map update gate.
 - `scripts/validate_governance_dependency_map_mirror.py` - local validator for the governance dependency-map mirror.
+- `scripts/validate_mirror_freshness.py` - tags: `mirror-freshness`, `upstream-drift`, `w2-2`; checks upstream W2-1 governance controls and recorded commit freshness when a local governance checkout is available.
 - `governance/THREE_REPO_ROUTING_GUARDRAILS.md` - active three-repo routing rules.
 - `governance/CROSS_REPO_CONTRACT_WITH_LOGOS_SCRIPTURE_GRAPH.md` - contract with Scripture Graph.
 - `governance/CONTAMINATION_CONTROLS.md` - rules that keep boundary material out of canonical Scripture authority.

@@ -24,6 +24,9 @@ jobs:
       - name: Validate governance dependency-map mirror
         run: python scripts/validate_governance_dependency_map_mirror.py
 
+      - name: Validate mirror freshness
+        run: python scripts/validate_mirror_freshness.py
+
       - name: Validate boundary schema controls
         run: python scripts/validate_boundary_schema_controls.py
 

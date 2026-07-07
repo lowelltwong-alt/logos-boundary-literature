@@ -39,8 +39,10 @@ REQUIRED_WATCHED = {
     ".ai/control/boundary_material_routing.yaml",
     ".ai/control/governance_dependency_map_mirror.yaml",
     "scripts/validate_governance_dependency_map_mirror.py",
+    "scripts/validate_mirror_freshness.py",
     "scripts/validate_boundary_schema_controls.py",
     "tests/test_governance_dependency_map_mirror.py",
+    "tests/test_mirror_freshness.py",
     "tests/test_boundary_schema_controls.py",
 }
 
@@ -53,6 +55,7 @@ REQUIRED_SURFACE_PHRASES = {
     TOC: [
         ".ai/control/governance_dependency_map_mirror.yaml",
         "scripts/validate_governance_dependency_map_mirror.py",
+        "scripts/validate_mirror_freshness.py",
     ],
     README: [
         ".ai/control/governance_dependency_map_mirror.yaml",
