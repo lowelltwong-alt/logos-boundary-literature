@@ -11,7 +11,7 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 ADAPTER_PATH = Path("governance/LLOS_STANDARD_MIRROR.yaml")
 INDEX_PATH = Path("governance/LLOS_LESSON_INDEX.yaml")
-EXPECTED_PIN = "sha256:e016efc12efa9375288e6e2f669ba91ea99fac89a7507f7ed5867192c3637766"
+EXPECTED_PIN = "sha256:7870b7fa030a22607c202c061a073b86acff850573efbcefcf87c9532528e57d"
 EXPECTED_CATEGORIES = {
     "boundary_intake",
     "reception_context",

@@ -11,7 +11,7 @@ standard_adapter: governance/LLOS_STANDARD_MIRROR.yaml
 upstream_standard_pin:
   standard_id: LLOS-v1
   surface_version: 1.0.0
-  content_sha256: sha256:e016efc12efa9375288e6e2f669ba91ea99fac89a7507f7ed5867192c3637766
+  content_sha256: sha256:7870b7fa030a22607c202c061a073b86acff850573efbcefcf87c9532528e57d
 authority:
   records_local_lesson_metadata: true
   index_is_authority: false
