@@ -1,7 +1,7 @@
 object_type: governance_dependency_map_mirror
 trust_zone: canonical
 lifecycle_status: active
-provenance_note: "Created 2026-06-29 to mirror the upstream Logos governance dependency-map update gate inside logos-boundary-literature. Updated 2026-07-06 for Fable PR-6 boundary schema-control and authority-crosswalk surfaces. Updated 2026-07-07 for W2-2 mirror freshness checks."
+provenance_note: "Created 2026-06-29 to mirror the upstream Logos governance dependency-map update gate inside logos-boundary-literature. Updated 2026-07-06 for Fable PR-6 boundary schema-control and authority-crosswalk surfaces. Updated 2026-07-07 for W2-2 mirror freshness checks. Updated 2026-07-11 for W2-8 LLOS v1 adapter and empty lesson-index bootstrap."
 reason_for_inclusion: "Force boundary-local governance changes to check the upstream governance dependency map and local mirror surfaces instead of relying on chat memory."
 schema_version: governance_dependency_map_mirror.v1
 mirror_id: logos_boundary_literature_governance_dependency_map_mirror
@@ -29,6 +29,10 @@ local_enforcement:
   mirror_freshness_test: tests/test_mirror_freshness.py
   boundary_schema_controls_validator: scripts/validate_boundary_schema_controls.py
   boundary_schema_controls_test: tests/test_boundary_schema_controls.py
+  llos_standard_mirror: governance/LLOS_STANDARD_MIRROR.yaml
+  llos_lesson_index: governance/LLOS_LESSON_INDEX.yaml
+  llos_validator: scripts/validate_llos_boundary_adapter.py
+  llos_test: tests/test_llos_boundary_adapter.py
   ci_workflow: .github/workflows/validate.yml
   front_door: AI_FRONT_DOOR.md
   table_of_contents: AI_TABLE_OF_CONTENTS.md
@@ -45,14 +49,18 @@ watched_local_governance_surfaces:
   - README.md
   - governance/
   - governance/AUTHORITY_LADDER_CROSSWALK.md
+  - governance/LLOS_STANDARD_MIRROR.yaml
+  - governance/LLOS_LESSON_INDEX.yaml
   - .ai/control/boundary_material_routing.yaml
   - .ai/control/governance_dependency_map_mirror.yaml
   - scripts/validate_governance_dependency_map_mirror.py
   - scripts/validate_mirror_freshness.py
   - scripts/validate_boundary_schema_controls.py
+  - scripts/validate_llos_boundary_adapter.py
   - tests/test_governance_dependency_map_mirror.py
   - tests/test_mirror_freshness.py
   - tests/test_boundary_schema_controls.py
+  - tests/test_llos_boundary_adapter.py
 required_behavior:
   - check_upstream_governance_dependency_map_when_governance_files_change
   - update_local_mirror_surfaces_when_upstream_governance_affects_boundary
@@ -61,3 +69,5 @@ required_behavior:
   - fail_closed_when_local_upstream_mirror_controls_are_missing_or_drifted
   - validate_boundary_schema_conformance_and_trust_tier_vocabulary
   - warn_on_suspected_source_text_or_scripture_text_in_data_files
+  - validate_llos_metadata_only_adapter_and_empty_lesson_index
+  - deny_dad_writes_without_new_explicit_approval

@@ -57,6 +57,20 @@ Local validator:
 Boundary schema and trust-tier validator:
 `scripts/validate_boundary_schema_controls.py`.
 
+## LLOS v1 Local Adapter
+
+`governance/LLOS_STANDARD_MIRROR.yaml` is the source-pinned, metadata-only adapter for the
+governance-owned LLOS v1 contract. `governance/LLOS_LESSON_INDEX.yaml` is intentionally empty;
+it does not admit lessons, transfer authority, authorize source import, create a runtime, or
+override another repository.
+
+`scripts/validate_llos_boundary_adapter.py` verifies the upstream identity and content pin, the
+boundary route/category allowlist, the empty bootstrap, and the DAD no-write boundary. Boundary
+tooling may write its own outbox and read central DAD candidates; DAD may read approved metadata
+and the repo outbox and write central DAD records only. DAD must not write any Boundary file or
+deliver to a Logos inbox without a new, explicit approval from Lowell Wong; this installation is
+not standing permission.
+
 If a governance-facing file changes here, agents must check whether the upstream governance
 dependency map and this local mirror surface also need updates. This repo must not override,
 weaken, or reinterpret the upstream governance dependency map. If the upstream map conflicts with a
@@ -125,6 +139,8 @@ Owner-reserved authorization required: only Lowell Wong, as project owner, may a
 - Do not normalize fake gospels, high-trust background, deuterocanon, and patristic reception into
   one bucket.
 - Do not create runtime ingestion pipelines in this scaffold.
+- Do not import LLOS lessons or DAD observations automatically; future lessons require local
+  re-authoring and human admission review.
 - Do not overwrite tradition-specific canon status.
 - Do not create unscoped theological claims.
 - Do not let boundary claims override, contaminate, or equal canonical Scripture authority.

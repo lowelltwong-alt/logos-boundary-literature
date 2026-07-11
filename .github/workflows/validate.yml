@@ -30,5 +30,8 @@ jobs:
       - name: Validate boundary schema controls
         run: python scripts/validate_boundary_schema_controls.py
 
+      - name: Validate Boundary W2-8 LLOS adapter
+        run: python scripts/validate_llos_boundary_adapter.py
+
       - name: Run tests
         run: python -m pytest -q

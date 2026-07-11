@@ -1,0 +1,57 @@
+object_type: llos_standard_mirror
+trust_zone: boundary
+lifecycle_status: active
+provenance_note: "Created 2026-07-11 for W2-8 as a source-pinned metadata-only adapter to the owner-approved LLOS v1 standard."
+reason_for_inclusion: "Make the family learning-loop contract discoverable in the boundary repo without creating a runtime, importing sources, or transferring authority."
+---
+schema_version: logos.llos.boundary-adapter.v1
+adapter_id: logos_boundary_literature_llos_v1_adapter
+owner_repo: logos-boundary-literature
+upstream_standard:
+  repo: logos-governance-architecture
+  path: governance/LOGOS_LEARNING_LOOP_OPERATING_STANDARD.yaml
+  standard_id: LLOS-v1
+  surface_version: 1.0.0
+  content_sha256: sha256:7870b7fa030a22607c202c061a073b86acff850573efbcefcf87c9532528e57d
+  source_snapshot: 2026-07-11-owner-approved-rollout
+  source_of_truth: true
+local_adapter:
+  route: boundary
+  allowed_categories:
+    - boundary_intake
+    - reception_context
+    - source_rights
+    - boundary_validation
+  lesson_index: governance/LLOS_LESSON_INDEX.yaml
+  validator: scripts/validate_llos_boundary_adapter.py
+  test: tests/test_llos_boundary_adapter.py
+authority:
+  local_repo_may_override_upstream_standard: false
+  adapter_is_authority: false
+  authorizes_source_import: false
+  authorizes_canonical_authority: false
+  authorizes_runtime_ingestion: false
+  authorizes_cross_repo_override: false
+  authorizes_theology_claim: false
+  requires_human_review_for_lesson_admission: true
+dad_bridge:
+  logos_local_may_write_own_outbox: true
+  logos_local_may_read_dad_central_candidates: true
+  dad_may_read_approved_metadata: true
+  dad_may_read_approved_repo_outbox: true
+  dad_may_write_central_dad_records: true
+  dad_may_write_inside_logos_repo: false
+  dad_may_deliver_to_logos_inbox: false
+  dad_may_mutate_logos_contract: false
+  dad_may_mutate_logos_index: false
+  approval_required_for_every_future_logos_write: true
+  approval_must_be_fresh_and_explicit: true
+  central_write_root: DAD_DATA_ROOT
+  export_metadata_only: true
+  export_forbidden:
+    - raw_source_text
+    - raw_corpus_rows
+    - private_payloads
+    - secrets
+    - unreviewed_theology_claims
+    - authority_bearing_conclusions

@@ -15,6 +15,9 @@ This file is the navigation map for agents and maintainers entering
 - `.ai/control/governance_dependency_map_mirror.yaml` - local mirror of the upstream `logos-governance-architecture/governance/GOVERNANCE_DEPENDENCY_MAP.yaml` GD-014 governance-map update gate.
 - `scripts/validate_governance_dependency_map_mirror.py` - local validator for the governance dependency-map mirror.
 - `scripts/validate_mirror_freshness.py` - tags: `mirror-freshness`, `upstream-drift`, `w2-2`; checks upstream W2-1 governance controls and recorded commit freshness when a local governance checkout is available.
+- `governance/LLOS_STANDARD_MIRROR.yaml` - source-pinned LLOS v1 metadata-only adapter; preserves governance ownership and DAD's no-write boundary.
+- `governance/LLOS_LESSON_INDEX.yaml` - intentionally empty local lesson-index bootstrap; future lessons require local re-authoring and human admission.
+- `scripts/validate_llos_boundary_adapter.py` - tags: `llos`, `w2-8`, `metadata-only`, `dad-no-write`; validates the adapter, empty index, and navigation wiring.
 - `governance/THREE_REPO_ROUTING_GUARDRAILS.md` - active three-repo routing rules.
 - `governance/CROSS_REPO_CONTRACT_WITH_LOGOS_SCRIPTURE_GRAPH.md` - contract with Scripture Graph.
 - `governance/CONTAMINATION_CONTROLS.md` - rules that keep boundary material out of canonical Scripture authority.

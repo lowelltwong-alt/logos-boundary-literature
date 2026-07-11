@@ -35,6 +35,18 @@ outputs.
 tradition-scoped claims, commentary/reception claims, and comparison/refutation/background
 relationships. It is hierarchically under, or at minimum never above, canonical Scripture authority.
 
+## LLOS v1 Metadata-Only Adapter
+
+The local LLOS v1 adapter at `governance/LLOS_STANDARD_MIRROR.yaml` pins the governance-owned
+standard by identity, version, and content hash. `governance/LLOS_LESSON_INDEX.yaml` starts empty
+and records no authority. It cannot import sources, create a runtime, change canonical authority,
+or override another repository.
+
+Boundary-local tooling may write its own outbox and read central DAD candidates. DAD may read
+approved metadata and the repository outbox, and may write central DAD records only; it cannot
+write any file here or deliver to a Logos inbox. Every future DAD-originated Boundary write
+requires a new, explicit approval from Lowell Wong.
+
 Commentaries, church-father citations, patristic reception, and ancient or modern theologian
 writings route here as source and reception metadata. This repo stores Scripture references, not
 Scripture text.
