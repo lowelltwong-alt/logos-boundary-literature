@@ -1,0 +1,32 @@
+object_type: llos_lesson_index
+trust_zone: boundary
+lifecycle_status: active
+provenance_note: "Created 2026-07-11 for W2-8 as an intentionally empty LLOS v1 lesson-index bootstrap."
+reason_for_inclusion: "Give approved future boundary lessons a local metadata-only home without treating candidates, DAD observations, or this index as authority."
+---
+schema_version: logos.llos.lesson-index.v1
+index_id: logos_boundary_literature_llos_lesson_index
+owner_repo: logos-boundary-literature
+standard_adapter: governance/LLOS_STANDARD_MIRROR.yaml
+upstream_standard_pin:
+  standard_id: LLOS-v1
+  surface_version: 1.0.0
+  content_sha256: sha256:e016efc12efa9375288e6e2f669ba91ea99fac89a7507f7ed5867192c3637766
+authority:
+  records_local_lesson_metadata: true
+  index_is_authority: false
+  authorizes_source_import: false
+  authorizes_canonical_authority: false
+  authorizes_runtime_ingestion: false
+  authorizes_cross_repo_override: false
+  authorizes_theology_claim: false
+  requires_human_review_for_admission: true
+admission_policy:
+  local_reauthoring_required: true
+  candidate_is_authority: false
+  ai_may_admit: false
+  dad_may_admit: false
+  external_import_allowed: false
+  raw_source_payload_allowed: false
+  theology_claim_allowed: false
+lessons: []

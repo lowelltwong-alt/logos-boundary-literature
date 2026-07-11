@@ -36,14 +36,18 @@ REQUIRED_WATCHED = {
     "README.md",
     "governance/",
     "governance/AUTHORITY_LADDER_CROSSWALK.md",
+    "governance/LLOS_STANDARD_MIRROR.yaml",
+    "governance/LLOS_LESSON_INDEX.yaml",
     ".ai/control/boundary_material_routing.yaml",
     ".ai/control/governance_dependency_map_mirror.yaml",
     "scripts/validate_governance_dependency_map_mirror.py",
     "scripts/validate_mirror_freshness.py",
     "scripts/validate_boundary_schema_controls.py",
+    "scripts/validate_llos_boundary_adapter.py",
     "tests/test_governance_dependency_map_mirror.py",
     "tests/test_mirror_freshness.py",
     "tests/test_boundary_schema_controls.py",
+    "tests/test_llos_boundary_adapter.py",
 }
 
 REQUIRED_SURFACE_PHRASES = {
