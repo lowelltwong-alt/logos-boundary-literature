@@ -51,3 +51,17 @@ After T005 lands, review source intake policy and add validation before any dumm
 source text import is not allowed yet. Any boundary-originated request that targets
 higher-authority governance or canonical Scripture layers must stop and be reviewed in the
 higher-authority repository.
+
+## T003 Boundary codex digital-pointer registry (2026-07-19)
+
+Owner-authorized T003 created a metadata-only boundary registry at
+`registries/biblical_codex_pointers/`. It contains 12 scholarly or official
+catalog roots and 8 direct mixed-codex component pointers. Every record declares
+trust level, tradition/profile scope, provenance, `canonical_claim: false`, and
+`can_override_scripture: false`.
+
+The registry stores no source text, images, downloads, or canonical Scripture
+records. All rows keep rights at `not_reviewed_pointer_only` and deny download
+authority. The focused registry validator and boundary schema validator pass;
+the full test suite passes 58/58; an independent cross-repository checker returned
+PASS after verifying all companion links and byte-identical schema snapshots.
