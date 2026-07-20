@@ -1,0 +1,34 @@
+id: T003
+title: "Boundary and non-canonical biblical codex digital-pointer registry"
+mode: metadata_build
+status: complete
+owner: codex
+authority:
+  human_authorization: "Lowell Wong explicitly authorized writing separate canonical and non-canonical pointer directories on 2026-07-19."
+  owner_repo: logos-boundary-literature
+  canonical_companion_repo: logos-scripture-graph
+scope:
+  allowed_paths:
+    - registries/biblical_codex_pointers/
+    - schemas/biblical_codex_pointer.schema.json
+    - scripts/validate_biblical_codex_pointer_registry.py
+    - tests/test_biblical_codex_pointer_registry.py
+    - .ai/tasks/T003_BIBLICAL_CODEX_POINTER_REGISTRY.task.yaml
+    - .ai/handoffs/T003_BIBLICAL_CODEX_POINTER_REGISTRY.md
+    - .ai/control/PROJECT_STATUS.md
+  forbidden_actions:
+    - import_source_texts
+    - download_sources
+    - create_canonical_scripture_records
+    - claim_universal_canon_status
+    - claim_item_level_completeness
+    - authorize_download_or_reuse
+acceptance_criteria:
+  - "Only boundary/non-canonical content pointers are stored here."
+  - "Every record has tradition scope, profile scope, trust level, provenance, and canonical denial fields."
+  - "Mixed physical codices link back to canonical companion IDs without copying canonical records."
+  - "The registry validator and full boundary test suite pass."
+validation:
+  - "python scripts/validate_biblical_codex_pointer_registry.py"
+  - "python scripts/validate_boundary_schema_controls.py"
+  - "python -m pytest -q"

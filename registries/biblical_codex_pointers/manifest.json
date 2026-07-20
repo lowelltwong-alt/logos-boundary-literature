@@ -1,0 +1,65 @@
+{
+  "schema_version": "biblical_codex_pointer_registry_manifest.v1",
+  "registry_id": "logos:boundary:noncanonical-codex-pointers",
+  "revision": "1.0.0-candidate",
+  "status": "candidate_metadata_only",
+  "artifact_class": "portable_core",
+  "repository_owner": "logos-boundary-literature",
+  "lane": "boundary_noncanonical",
+  "schema_path": "schemas/biblical_codex_pointer.schema.json",
+  "files": {
+    "catalog_roots": "registries/biblical_codex_pointers/boundary_noncanonical/catalog_roots.jsonl",
+    "direct_witnesses": "registries/biblical_codex_pointers/boundary_noncanonical/direct_witnesses.jsonl"
+  },
+  "declared_counts": {
+    "catalog_roots": 12,
+    "direct_witnesses": 8,
+    "total": 20
+  },
+  "coverage": {
+    "catalog_root_target": "extensive_high_confidence_roots",
+    "direct_witness_coverage": "curated_non_exhaustive",
+    "item_level_complete": false,
+    "known_gaps": [
+      "NASSCAL entries must be enumerated into manuscript-level pointers in a future reviewed task.",
+      "Nag Hammadi collection items and all thirteen physical codices need stable item-level mapping.",
+      "Deuterocanonical components of mixed codices need expert book-by-book enumeration.",
+      "Many institutional portals expose images only through interactive sessions or changing object URLs."
+    ]
+  },
+  "authority": {
+    "canonical_claim": false,
+    "can_override_scripture": false,
+    "can_equal_scripture_authority": false,
+    "authorizes_downloads": false,
+    "authorizes_reuse": false,
+    "canonical_records_stored_here": false
+  },
+  "compatibility": {
+    "schema_policy": "additive_minor_only_until_governance_adoption",
+    "breaking_change_requires_new_schema_version": true,
+    "canonical_schema_snapshot_expected_identical": true,
+    "governance_adoption_status": "pending_clean_governance_worktree_and_human_review"
+  },
+  "freshness": {
+    "review_date": "2026-07-19",
+    "stale_after_days": 180,
+    "fail_closed_states": [
+      "invalid_schema",
+      "fingerprint_mismatch",
+      "lane_mismatch",
+      "missing_scope",
+      "authority_leak"
+    ]
+  },
+  "fingerprints": {
+    "schema_sha256": "4109b5cb377d563f0b188a2bf6bd25b9c60cea49d11ba4893916af5b85130cad",
+    "catalog_roots_sha256": "e29a3e17bb2bdfe9c40d77ec18e40f11f5c33696bb678754a4c1c327b1a158ea",
+    "direct_witnesses_sha256": "2a0aa1774c7f3728d02ef6ab6bf7548546001c4a12cd850ee766d647efa2423a"
+  },
+  "reverse_consumers": [
+    "future boundary source-intake queue",
+    "future tradition-scoped canon comparison UI",
+    "future rights-review queue"
+  ]
+}
